@@ -1,0 +1,3 @@
+- insert:
+    - id: dsh-bankrec
+      name: '@perrylink/dsh-bankrec'
