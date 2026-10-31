@@ -52,6 +52,37 @@ Requires DSH `>=0.2.1-rc.3 <0.3.0` and Node `>=24.9 <25`.
 
 MIT CAMT.053 and MT940 samples; `ACCEPTANCE.csv` lists 7 public checks.
 
+## 中文说明
+
+银行流水/GL/CAMT.053/MT940 入库、对账与三表底稿。**公开/合成、alpha、非 GA**；没有客户银行数据。
+
+### 安装
+
+```sh
+dsh plugin --profile <profile> add dsh-bankrec
+```
+
+### 工具
+
+| 工具 | 作用 |
+|---|---|
+| `bankrec.ingest` | 银行 CSV/GL 入库 |
+| `bankrec.ingest_camt` | CAMT.053 XML 入库 |
+| `bankrec.ingest_mt940` | MT940 对账单入库 |
+| `bankrec.reconcile_camt` | 期初 + 明细 = 期末；多账户必须给 `account_id` |
+| `bankrec.match` | 银行行与 GL 行 1:1 匹配 |
+| `bankrec.export` | 银行 / GL / 匹配三张表 |
+
+### 输入 / 输出
+
+输入银行 CSV/GL、CAMT.053 或 MT940；输出匹配/未匹配行和三表对账底稿。
+
+### 边界
+
+- 不连银行 API，不做 PDF/OCR 流水，不自动写回银行/ERP。
+- 只做 1:1 匹配，不做模糊多对多对账引擎。
+- 无 Client，无客户银行数据。
+
 ## Development
 
 ```sh
