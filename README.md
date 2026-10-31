@@ -1,4 +1,4 @@
-# @perrylink/dsh-bankrec
+# dsh-bankrec
 
 Bank CSV/GL/CAMT.053/MT940 ingest, matching and a 3-sheet reconciliation workpaper for DeepSeek Harness.
 
@@ -7,7 +7,7 @@ Bank CSV/GL/CAMT.053/MT940 ingest, matching and a 3-sheet reconciliation workpap
 ## Install
 
 ```sh
-dsh plugin --profile <profile> add @perrylink/dsh-bankrec
+dsh plugin --profile <profile> add dsh-bankrec
 dsh --profile <profile> --dump-config | grep dsh-bankrec
 ```
 
@@ -16,7 +16,7 @@ Requires DSH `>=0.2.1-rc.3 <0.3.0` and Node `>=24.9 <25`.
 <details>
 <summary>中文摘要</summary>
 
-银行流水/GL/CAMT.053/MT940 入库、对账与三表底稿。 安装：`dsh plugin --profile <profile> add @perrylink/dsh-bankrec`。公开/合成、alpha、非 GA。
+银行流水/GL/CAMT.053/MT940 入库、对账与三表底稿。 安装：`dsh plugin --profile <profile> add dsh-bankrec`。公开/合成、alpha、非 GA。
 
 </details>
 
