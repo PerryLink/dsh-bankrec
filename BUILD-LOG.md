@@ -7,3 +7,7 @@
 ### alpha.1 — CAMT.053
 
 - Added `bankrec.ingest_camt`; 2 MIT public CAMT samples (2 + 11 entries); test/gate include public sample.
+
+### alpha.1 verified
+
+- `latest`/`next` alpha.1; tests 3/3; gate 5 rows; CAMT samples 2 + 11 entries.
