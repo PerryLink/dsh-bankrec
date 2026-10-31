@@ -19,3 +19,6 @@
 
 - `bankrec.reconcile_camt` now supports `account_id` and rejects ambiguous multi-account input; MIT multi-account sample test.
 - Tests pass; gate 6 rows.
+
+### latest moved
+- `latest`/`next` verified alpha.3 after propagation.
