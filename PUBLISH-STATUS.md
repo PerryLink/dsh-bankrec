@@ -26,3 +26,6 @@
 ## 0.1.0-alpha.4 — MT940 (2026-10-31)
 
 - Added `bankrec.ingest_mt940`; MIT sample 5 entries; tests 7; gate 7 rows.
+
+### latest moved
+- `latest`/`next` verified alpha.4 after propagation; CI run queued at last check.
