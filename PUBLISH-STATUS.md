@@ -9,3 +9,8 @@
 - `latest`/`next` moved to alpha.1 after propagation.
 - Added `bankrec.ingest_camt` with 2 MIT public CAMT.053 samples (2 + 11 entries); 5 gate rows, 3 tests.
 - Public sample licenses/source in `fixtures/public/mit-camt/`; not in npm tarball.
+
+## 0.1.0-alpha.2 — CAMT balance identity (2026-10-31)
+
+- Added `bankrec.reconcile_camt`; MIT test-camt053 balances: opening 100000 + net -5000 = closing 95000.
+- Tests pass; gate 6 rows.

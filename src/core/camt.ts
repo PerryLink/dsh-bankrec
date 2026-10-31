@@ -34,3 +34,22 @@ export function parseCamt(text: string, accountOverride?: string, evidenceSha?: 
   if (out.length === 0) throw new BankrecError('E_BR_CSV_INVALID', 'CAMT has no entries')
   return out
 }
+
+export interface CamtBalance { type: string; amount_cents: number; date: string }
+
+export function parseCamtBalances(text: string): CamtBalance[] {
+  let root: any
+  try { root = parser.parse(text) } catch { throw new BankrecError('E_BR_CSV_INVALID', 'CAMT XML is not parseable') }
+  const statements = asArray(asObject(root?.Document)?.BkToCstmrStmt?.Stmt)
+  const balances: CamtBalance[] = []
+  for (const stmt of statements) {
+    for (const bal of asArray(stmt?.Bal)) {
+      const type = scalar(bal?.Tp?.CdOrPrtry?.Cd)
+      const raw = scalar(bal?.Amt)
+      if (!type || !raw) continue
+      const sign = scalar(bal?.CdtDbtInd).toUpperCase() === 'DBIT' ? -1 : 1
+      balances.push({ type, amount_cents: sign * cents(raw), date: scalar(bal?.Dt?.Dt) || scalar(bal?.Dt?.DtTm).slice(0, 10) })
+    }
+  }
+  return balances
+}

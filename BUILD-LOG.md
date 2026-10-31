@@ -11,3 +11,7 @@
 ### alpha.1 verified
 
 - `latest`/`next` alpha.1; tests 3/3; gate 5 rows; CAMT samples 2 + 11 entries.
+
+### alpha.2 — CAMT balance identity
+
+- Added `bankrec.reconcile_camt`; test/acceptance against MIT test-camt053 (balanced).
