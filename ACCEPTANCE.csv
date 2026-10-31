@@ -1,7 +1,7 @@
 req_id,metric,threshold,actual,script,evidence_sha256,pass
-SKU-06-A01,流水解析（30）,30/30,30,scripts/acceptance.mjs,ab998e5f4dd23f6e3c90c80df52cd5d8bcd898349776c307499ad2d10aec8293,true
-SKU-06-A02,1:1 匹配,30/30,30,scripts/acceptance.mjs,ab998e5f4dd23f6e3c90c80df52cd5d8bcd898349776c307499ad2d10aec8293,true
-SKU-06-A03,未达行,0,0,scripts/acceptance.mjs,ab998e5f4dd23f6e3c90c80df52cd5d8bcd898349776c307499ad2d10aec8293,true
-SKU-06-A04,底稿 sheet,3,3,scripts/acceptance.mjs,ab998e5f4dd23f6e3c90c80df52cd5d8bcd898349776c307499ad2d10aec8293,true
-SKU-06-A05,CAMT.053 公开样本行,11,11,scripts/acceptance.mjs,ab998e5f4dd23f6e3c90c80df52cd5d8bcd898349776c307499ad2d10aec8293,true
-SKU-06-A06,CAMT 余额恒等式,1/1,1,scripts/acceptance.mjs,ab998e5f4dd23f6e3c90c80df52cd5d8bcd898349776c307499ad2d10aec8293,true
+SKU-06-A01,流水解析（30）,30/30,30,scripts/acceptance.mjs,efcb98c804def43b4b875ac3ba80404c7a7f20dafabcf6ec9d309f65a985f8f5,true
+SKU-06-A02,1:1 匹配,30/30,30,scripts/acceptance.mjs,efcb98c804def43b4b875ac3ba80404c7a7f20dafabcf6ec9d309f65a985f8f5,true
+SKU-06-A03,未达行,0,0,scripts/acceptance.mjs,efcb98c804def43b4b875ac3ba80404c7a7f20dafabcf6ec9d309f65a985f8f5,true
+SKU-06-A04,底稿 sheet,3,3,scripts/acceptance.mjs,efcb98c804def43b4b875ac3ba80404c7a7f20dafabcf6ec9d309f65a985f8f5,true
+SKU-06-A05,CAMT.053 公开样本行,11,11,scripts/acceptance.mjs,efcb98c804def43b4b875ac3ba80404c7a7f20dafabcf6ec9d309f65a985f8f5,true
+SKU-06-A06,CAMT 余额恒等式,1/1,1,scripts/acceptance.mjs,efcb98c804def43b4b875ac3ba80404c7a7f20dafabcf6ec9d309f65a985f8f5,true

@@ -35,7 +35,7 @@ export function parseCamt(text: string, accountOverride?: string, evidenceSha?: 
   return out
 }
 
-export interface CamtBalance { type: string; amount_cents: number; date: string }
+export interface CamtBalance { account: string; type: string; amount_cents: number; date: string }
 
 export function parseCamtBalances(text: string): CamtBalance[] {
   let root: any
@@ -43,12 +43,13 @@ export function parseCamtBalances(text: string): CamtBalance[] {
   const statements = asArray(asObject(root?.Document)?.BkToCstmrStmt?.Stmt)
   const balances: CamtBalance[] = []
   for (const stmt of statements) {
+    const account = scalar(stmt?.Acct?.Id?.IBAN) || scalar(stmt?.Acct?.Id?.Othr?.Id)
     for (const bal of asArray(stmt?.Bal)) {
       const type = scalar(bal?.Tp?.CdOrPrtry?.Cd)
       const raw = scalar(bal?.Amt)
       if (!type || !raw) continue
       const sign = scalar(bal?.CdtDbtInd).toUpperCase() === 'DBIT' ? -1 : 1
-      balances.push({ type, amount_cents: sign * cents(raw), date: scalar(bal?.Dt?.Dt) || scalar(bal?.Dt?.DtTm).slice(0, 10) })
+      balances.push({ account, type, amount_cents: sign * cents(raw), date: scalar(bal?.Dt?.Dt) || scalar(bal?.Dt?.DtTm).slice(0, 10) })
     }
   }
   return balances

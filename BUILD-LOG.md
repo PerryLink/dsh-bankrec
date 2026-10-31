@@ -15,3 +15,7 @@
 ### alpha.2 — CAMT balance identity
 
 - Added `bankrec.reconcile_camt`; test/acceptance against MIT test-camt053 (balanced).
+
+### alpha.3 — multi-account CAMT
+
+- Balance reconciliation filters by account; test uses MIT multi-account sample.

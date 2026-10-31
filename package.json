@@ -1,6 +1,6 @@
 {
   "name": "@perrylink/dsh-bankrec",
-  "version": "0.1.0-alpha.2",
+  "version": "0.1.0-alpha.3",
   "description": "Bank statement ingest, 1:1 matching and reconciliation workpaper (SKU-06 S1 public/synthetic demo).",
   "type": "module",
   "main": "./lib/plugin/index.js",

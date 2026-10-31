@@ -14,3 +14,8 @@
 
 - Added `bankrec.reconcile_camt`; MIT test-camt053 balances: opening 100000 + net -5000 = closing 95000.
 - Tests pass; gate 6 rows.
+
+## 0.1.0-alpha.3 — multi-account CAMT (2026-10-31)
+
+- `bankrec.reconcile_camt` now supports `account_id` and rejects ambiguous multi-account input; MIT multi-account sample test.
+- Tests pass; gate 6 rows.
