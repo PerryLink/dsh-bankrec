@@ -1,7 +1,7 @@
 {
   "name": "@perrylink/dsh-bankrec",
-  "version": "0.1.0-alpha.4",
-  "description": "Bank statement ingest, 1:1 matching and reconciliation workpaper (SKU-06 S1 public/synthetic demo).",
+  "version": "0.1.0-alpha.5",
+  "description": "Bank statement ingest, CAMT.053/MT940 reconciliation and 3-sheet workpaper.",
   "type": "module",
   "main": "./lib/plugin/index.js",
   "types": "./lib/plugin/index.d.ts",
@@ -45,7 +45,9 @@
     "bank-rec",
     "reconciliation",
     "finance",
-    "perrylink"
+    "perrylink",
+    "camt",
+    "mt940"
   ],
   "repository": {
     "type": "git",
@@ -81,5 +83,9 @@
     "@deepseek-ai/schemastery": "3.18.5",
     "@types/node": "^24.0.0",
     "typescript": "7.0.2"
+  },
+  "homepage": "https://github.com/PerryLink/dsh-bankrec#readme",
+  "bugs": {
+    "url": "https://github.com/PerryLink/dsh-bankrec/issues"
   }
 }
