@@ -84,7 +84,7 @@
     "@types/node": "^24.0.0",
     "typescript": "7.0.2"
   },
-  "homepage": "https://github.com/PerryLink/dsh-bankrec#readme",
+  "homepage": "https://perrylink.github.io/dsh-plugins/packages/dsh-bankrec.html",
   "bugs": {
     "url": "https://github.com/PerryLink/dsh-bankrec/issues"
   }
