@@ -1,8 +1,8 @@
 req_id,metric,threshold,actual,script,evidence_sha256,pass,source,counted
-SKU-06-A01,流水解析（30）,30/30,30,scripts/acceptance.mjs,7e9d5010b8be95a1440c33967ab9fac21407703517a9dd69a66a89102b289448,true,public/synthetic,false
-SKU-06-A02,1:1 匹配,30/30,30,scripts/acceptance.mjs,7e9d5010b8be95a1440c33967ab9fac21407703517a9dd69a66a89102b289448,true,public/synthetic,false
-SKU-06-A03,未达行,0,0,scripts/acceptance.mjs,7e9d5010b8be95a1440c33967ab9fac21407703517a9dd69a66a89102b289448,true,public/synthetic,false
-SKU-06-A04,底稿 sheet,3,3,scripts/acceptance.mjs,7e9d5010b8be95a1440c33967ab9fac21407703517a9dd69a66a89102b289448,true,public/synthetic,false
-SKU-06-A05,CAMT.053 公开样本行,11,11,scripts/acceptance.mjs,7e9d5010b8be95a1440c33967ab9fac21407703517a9dd69a66a89102b289448,true,public/synthetic,false
-SKU-06-A06,CAMT 余额恒等式,1/1,1,scripts/acceptance.mjs,7e9d5010b8be95a1440c33967ab9fac21407703517a9dd69a66a89102b289448,true,public/synthetic,false
-SKU-06-A07,MT940 公开样本行,5,5,scripts/acceptance.mjs,7e9d5010b8be95a1440c33967ab9fac21407703517a9dd69a66a89102b289448,true,public/synthetic,false
+SKU-06-A01,流水解析（30）,30/30,30,scripts/acceptance.mjs,af24f1206b80b61a03dd447bc3861e0a1303a74501343d74a823a595084dee96,true,public/synthetic,false
+SKU-06-A02,1:1 匹配,30/30,30,scripts/acceptance.mjs,af24f1206b80b61a03dd447bc3861e0a1303a74501343d74a823a595084dee96,true,public/synthetic,false
+SKU-06-A03,未达行,0,0,scripts/acceptance.mjs,af24f1206b80b61a03dd447bc3861e0a1303a74501343d74a823a595084dee96,true,public/synthetic,false
+SKU-06-A04,底稿 sheet,3,3,scripts/acceptance.mjs,af24f1206b80b61a03dd447bc3861e0a1303a74501343d74a823a595084dee96,true,public/synthetic,false
+SKU-06-A05,CAMT.053 公开样本行,11,11,scripts/acceptance.mjs,af24f1206b80b61a03dd447bc3861e0a1303a74501343d74a823a595084dee96,true,public/synthetic,false
+SKU-06-A06,CAMT 余额恒等式,1/1,1,scripts/acceptance.mjs,af24f1206b80b61a03dd447bc3861e0a1303a74501343d74a823a595084dee96,true,public/synthetic,false
+SKU-06-A07,MT940 公开样本行,5,5,scripts/acceptance.mjs,af24f1206b80b61a03dd447bc3861e0a1303a74501343d74a823a595084dee96,true,public/synthetic,false
