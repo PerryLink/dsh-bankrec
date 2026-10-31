@@ -19,3 +19,7 @@
 ### alpha.3 — multi-account CAMT
 
 - Balance reconciliation filters by account; test uses MIT multi-account sample.
+
+### alpha.4 — MT940
+
+- Added `bankrec.ingest_mt940`; MIT sample 5 entries; tests 7.
