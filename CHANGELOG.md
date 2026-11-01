@@ -1,6 +1,12 @@
 # Changelog
 
-## [0.1.0-alpha.12] — 2026-11-01
+## [0.1.0-alpha.14] — 2026-11-01
+
+### Added
+
+- `bankrec.camt056_list`: read CAMT.056 payment cancellation requests (original transaction id, end-to-end id, reason code, account). Read-only; nothing is cancelled. Verified by `node --test test/*.test.mjs` (17/17).
+
+## [Unreleased]
 
 ### Added
 

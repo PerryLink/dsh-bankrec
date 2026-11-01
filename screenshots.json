@@ -22,5 +22,11 @@
     "kind": "capability",
     "alt": "dsh-bankrec second capability real test run",
     "caption": "Real command: node --test test/camt054.test.mjs — 3 tests passed, 0 failed (CAMT.054 debit/credit notification ingest (signed amounts, account, period).) Run 2026-11-01; rendered from the captured terminal output."
+  },
+  {
+    "path": "docs/assets/dsh-bankrec-capability3.png",
+    "kind": "capability",
+    "alt": "dsh-bankrec CAMT.056 run",
+    "caption": "Real command: node --test test/camt056.test.mjs — 2 tests passed, 0 failed (ISO 20022 camt.056 cancellation requests: original tx id, end-to-end id, reason code, account). Run 2026-11-01; rendered from the captured terminal output."
   }
 ]

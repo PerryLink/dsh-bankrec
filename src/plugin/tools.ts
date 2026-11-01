@@ -4,7 +4,7 @@ import path from 'node:path'
 import * as XLSX from 'xlsx'
 import { defineTool } from '@deepseek-ai/dsh-tools'
 import { BankrecError, parseCsv } from '../core/bankrec.js'
-import { parseCamt, parseCamt054, parseCamtBalances } from '../core/camt.js'
+import { parseCamt, parseCamt054, parseCamt056, parseCamtBalances } from '../core/camt.js'
 import { parseMt940 } from '../core/mt940.js'
 import { ibanCheck } from '../core/iban.js'
 import type { MatchRecord, Table, TxnRecord } from './storage.js'
@@ -27,5 +27,7 @@ export function createTools(deps:ToolDeps){
 
  const camt054=defineTool({name:'bankrec.ingest_camt054',description:'Ingest CAMT.054 debit/credit notification entries (BkToCstmrDbtCdtNtfctn) as bank rows. Local R1 write.',parameters:{camt_xml:{type:'string',required:true},account_id:{type:'string'}},output:{schema:{type:'object',additionalProperties:false,properties:{rows:{type:'number',required:true},account_id:{type:'string',required:true}}},render:(_a,v)=>text('camt054 rows='+v.rows)},async execute(args){const rows=parseCamt054(args.camt_xml,args.account_id);let stored=0;for(const row of rows){if(deps.transactions.get(row.txn_id))continue;await deps.transactions.put(row.txn_id,row);stored++}return{rows:stored,account_id:rows[0].account_id}}})
 
- return [ingest,camt,mt940,match,reconcile,exportTool,ibanTool,camt054]
+ const camt056=defineTool({name:'bankrec.camt056_list',description:'List payment cancellation requests from a CAMT.056 document (original transaction id, end-to-end id, reason code, account). Read-only; nothing is cancelled.',parameters:{camt_xml:{type:'string',required:true}},output:{schema:{type:'object',additionalProperties:false,properties:{requests:{type:'number',required:true},items:{type:'array',required:true,items:{type:'object',additionalProperties:false,properties:{cancellation_id:{type:'string',required:true},original_tx_id:{type:'string',required:true},original_end_to_end_id:{type:'string',required:true},reason_code:{type:'string',required:true},account:{type:'string',required:true}}}}}},render:(_a,v)=>text('cancellations='+v.requests)},async execute(a){const items=parseCamt056(a.camt_xml);return{requests:items.length,items}}})
+
+ return [ingest,camt,mt940,match,reconcile,exportTool,ibanTool,camt054,camt056]
 }

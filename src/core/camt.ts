@@ -83,3 +83,33 @@ export function parseCamt054(text: string, accountOverride?: string, evidenceSha
   if (out.length === 0) throw new BankrecError('E_BR_CSV_INVALID', 'CAMT.054 has no entries')
   return out
 }
+
+export interface Camt056Request {
+  cancellation_id: string
+  original_tx_id: string
+  original_end_to_end_id: string
+  reason_code: string
+  account: string
+}
+/** camt.056 payment cancellation requests (BkToCstmrCxlReq/CxlReq) — read-only extraction. */
+export function parseCamt056(text: string): Camt056Request[] {
+  let root: any
+  try { root = parser.parse(text) } catch { throw new BankrecError('E_BR_CSV_INVALID', 'CAMT.056 XML is not parseable') }
+  const requests = asArray(asObject(root?.Document)?.BkToCstmrCxlReq?.CxlReq)
+  if (requests.length === 0) throw new BankrecError('E_BR_CSV_INVALID', 'CAMT.056 has no BkToCstmrCxlReq/CxlReq')
+  const out: Camt056Request[] = []
+  for (const [index, req] of requests.entries()) {
+    const infos = asArray(req?.Undrlyg?.TxInf)
+    for (const [inner, tx] of infos.entries()) {
+      out.push({
+        cancellation_id: `${scalar(req?.Id) || 'cxl'}-${index}-${inner}`,
+        original_tx_id: scalar(tx?.OrgnlTxId),
+        original_end_to_end_id: scalar(tx?.OrgnlEndToEndId),
+        reason_code: scalar(tx?.CxlRsnInf?.Rsn?.Cd) || scalar(tx?.CxlRsnInf?.Rsn?.Prtry),
+        account: scalar(tx?.OrgnlTxRef?.Acct?.Id?.IBAN) || scalar(req?.Acct?.Id?.IBAN),
+      })
+    }
+  }
+  if (out.length === 0) throw new BankrecError('E_BR_CSV_INVALID', 'CAMT.056 has no transaction info')
+  return out
+}
