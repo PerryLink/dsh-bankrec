@@ -2,7 +2,7 @@
 
 All notable changes to `dsh-bankrec` are documented here. The format follows Keep a Changelog; this project uses alpha versions.
 
-## [0.1.0-alpha.8] — 2026-11-01
+## [0.1.0-alpha.9] — 2026-11-01
 
 ### Added
 
