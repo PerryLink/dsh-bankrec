@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.0-alpha.11] — 2026-11-01
+
+### Added
+
+- `bankrec.iban_check`: IBAN validation per ISO 13616 (charset, country BBAN length, ISO 7064 mod 97-10). Verified by `node --test test/iban.test.mjs` (5/5) and the full suite (12/12); no third-party code or fixtures.
+
 ## [0.1.0-alpha.10] — 2026-11-01
 
 ### Changed

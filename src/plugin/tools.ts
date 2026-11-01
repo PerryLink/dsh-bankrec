@@ -6,6 +6,7 @@ import { defineTool } from '@deepseek-ai/dsh-tools'
 import { BankrecError, parseCsv } from '../core/bankrec.js'
 import { parseCamt, parseCamtBalances } from '../core/camt.js'
 import { parseMt940 } from '../core/mt940.js'
+import { ibanCheck } from '../core/iban.js'
 import type { MatchRecord, Table, TxnRecord } from './storage.js'
 export interface ToolDeps { transactions:Table<TxnRecord>; matches:Table<MatchRecord>; baseDir:string }
 const text=(t:string)=>[{type:'text' as const,text:t}]; const sha=(v:string|Buffer)=>createHash('sha256').update(v).digest('hex')
@@ -22,5 +23,7 @@ export function createTools(deps:ToolDeps){
 
  const reconcile=defineTool({name:'bankrec.reconcile_camt',description:'Check CAMT.053 opening/closing balance continuity against the sum of entries; read-only.',parameters:{camt_xml:{type:'string',required:true},account_id:{type:'string'}},output:{schema:{type:'object',additionalProperties:false,properties:{opening_cents:{type:'number',required:true},closing_cents:{type:'number',required:true},net_cents:{type:'number',required:true},difference_cents:{type:'number',required:true},balanced:{type:'boolean',required:true}}},render:(_a,v)=>text(`CAMT balance ${v.balanced?'ok':'DIFF'} (${v.difference_cents})`)},async execute(a){const allBalances=parseCamtBalances(a.camt_xml);const accounts=[...new Set(allBalances.map(b=>b.account))];const account=a.account_id??(accounts.length===1?accounts[0]:undefined);if(!account)throw new BankrecError('E_BR_CSV_INVALID','multiple accounts; account_id required');const balances=allBalances.filter(b=>b.account===account);const rows=parseCamt(a.camt_xml).filter(r=>r.account_id===account);const open=balances.find(b=>/^OPBD|^PRCD/.test(b.type));const close=balances.find(b=>/^CLBD|^CLAV/.test(b.type));if(!open||!close)throw new BankrecError('E_BR_CSV_INVALID','CAMT lacks opening/closing balance');const net=rows.reduce((n,r)=>n+r.amount_cents,0);const diff=open.amount_cents+net-close.amount_cents;return{opening_cents:open.amount_cents,closing_cents:close.amount_cents,net_cents:net,difference_cents:diff,balanced:diff===0}}})
 
- return [ingest,camt,mt940,match,reconcile,exportTool]
+ const ibanTool=defineTool({name:'bankrec.iban_check',description:'Validate an IBAN per ISO 13616 (charset, length, country BBAN length, mod-97). Read-only.',parameters:{iban:{type:'string',required:true}},output:{schema:{type:'object',additionalProperties:false,properties:{iban:{type:'string',required:true},valid:{type:'boolean',required:true},country:{type:'string',required:true},check_digits:{type:'string',required:true},reason:{type:'string'}}},render:(_a,v)=>text(v.iban+' '+(v.valid?'ok':'invalid'))},async execute(args){return ibanCheck(args.iban)}})
+
+ return [ingest,camt,mt940,match,reconcile,exportTool,ibanTool]
 }

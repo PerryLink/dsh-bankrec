@@ -10,5 +10,11 @@
     "kind": "demo",
     "alt": "Animated dsh-bankrec terminal session",
     "caption": "The same run, assembled line by line."
+  },
+  {
+    "path": "docs/assets/dsh-bankrec-capability.png",
+    "kind": "capability",
+    "alt": "dsh-bankrec IBAN validation run",
+    "caption": "Real command: node --test test/iban.test.mjs — 5 tests passed, 0 failed (ISO 13616 mod-97, country length, checksum codes). Run 2026-11-01; rendered from the captured terminal output."
   }
 ]

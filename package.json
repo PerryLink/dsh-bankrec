@@ -1,6 +1,6 @@
 {
   "name": "dsh-bankrec",
-  "version": "0.1.0-alpha.10",
+  "version": "0.1.0-alpha.11",
   "description": "Bank statement ingest, CAMT.053/MT940 reconciliation and 3-sheet workpaper.",
   "type": "module",
   "main": "./lib/plugin/index.js",
