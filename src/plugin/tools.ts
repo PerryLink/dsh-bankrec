@@ -4,7 +4,7 @@ import path from 'node:path'
 import * as XLSX from 'xlsx'
 import { defineTool } from '@deepseek-ai/dsh-tools'
 import { BankrecError, parseCsv } from '../core/bankrec.js'
-import { parseCamt, parseCamtBalances } from '../core/camt.js'
+import { parseCamt, parseCamt054, parseCamtBalances } from '../core/camt.js'
 import { parseMt940 } from '../core/mt940.js'
 import { ibanCheck } from '../core/iban.js'
 import type { MatchRecord, Table, TxnRecord } from './storage.js'
@@ -25,5 +25,7 @@ export function createTools(deps:ToolDeps){
 
  const ibanTool=defineTool({name:'bankrec.iban_check',description:'Validate an IBAN per ISO 13616 (charset, length, country BBAN length, mod-97). Read-only.',parameters:{iban:{type:'string',required:true}},output:{schema:{type:'object',additionalProperties:false,properties:{iban:{type:'string',required:true},valid:{type:'boolean',required:true},country:{type:'string',required:true},check_digits:{type:'string',required:true},reason:{type:'string'}}},render:(_a,v)=>text(v.iban+' '+(v.valid?'ok':'invalid'))},async execute(args){return ibanCheck(args.iban)}})
 
- return [ingest,camt,mt940,match,reconcile,exportTool,ibanTool]
+ const camt054=defineTool({name:'bankrec.ingest_camt054',description:'Ingest CAMT.054 debit/credit notification entries (BkToCstmrDbtCdtNtfctn) as bank rows. Local R1 write.',parameters:{camt_xml:{type:'string',required:true},account_id:{type:'string'}},output:{schema:{type:'object',additionalProperties:false,properties:{rows:{type:'number',required:true},account_id:{type:'string',required:true}}},render:(_a,v)=>text('camt054 rows='+v.rows)},async execute(args){const rows=parseCamt054(args.camt_xml,args.account_id);let stored=0;for(const row of rows){if(deps.transactions.get(row.txn_id))continue;await deps.transactions.put(row.txn_id,row);stored++}return{rows:stored,account_id:rows[0].account_id}}})
+
+ return [ingest,camt,mt940,match,reconcile,exportTool,ibanTool,camt054]
 }

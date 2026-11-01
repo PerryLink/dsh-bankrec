@@ -1,6 +1,12 @@
 # Changelog
 
-## [0.1.0-alpha.11] — 2026-11-01
+## [0.1.0-alpha.12] — 2026-11-01
+
+### Added
+
+- `bankrec.ingest_camt054`: parse CAMT.054 debit/credit notifications (`BkToCstmrDbtCdtNtfctn`) into the same bank rows as camt.053, with signed amounts and duplicate-safe storage. Verified by `node --test test/*.test.mjs` (15/15).
+
+## [Unreleased]
 
 ### Added
 

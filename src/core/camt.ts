@@ -54,3 +54,32 @@ export function parseCamtBalances(text: string): CamtBalance[] {
   }
   return balances
 }
+
+
+/** camt.054 debit/credit notification entries (BkToCstmrDbtCdtNtfctn/Ntfctn), same row shape as camt.053. */
+export function parseCamt054(text: string, accountOverride?: string, evidenceSha?: string): TxnRecord[] {
+  let root: any
+  try { root = parser.parse(text) } catch { throw new BankrecError('E_BR_CSV_INVALID', 'CAMT.054 XML is not parseable') }
+  const notifications = asArray(asObject(root?.Document)?.BkToCstmrDbtCdtNtfctn?.Ntfctn)
+  if (notifications.length === 0) throw new BankrecError('E_BR_CSV_INVALID', 'CAMT.054 has no BkToCstmrDbtCdtNtfctn/Ntfctn')
+  const evidence = evidenceSha ?? createHash('sha256').update(text).digest('hex')
+  const out: TxnRecord[] = []
+  for (const notification of notifications) {
+    const iban = scalar(notification?.Acct?.Id?.IBAN) || scalar(notification?.Acct?.Id?.Othr?.Id)
+    const account = accountOverride?.trim() || iban
+    if (!account) throw new BankrecError('E_BR_CSV_INVALID', 'CAMT.054 notification has no account/IBAN')
+    const notificationId = scalar(notification?.Id) || 'ntfctn'
+    for (const [index, entry] of asArray(notification?.Ntry).entries()) {
+      const amount = scalar(entry?.Amt)
+      const sign = scalar(entry?.CdtDbtInd).toUpperCase() === 'DBIT' ? -1 : 1
+      const value = sign * cents(amount)
+      const date = dateOf(entry)
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new BankrecError('E_BR_CSV_INVALID', `CAMT.054 entry has no booking date (${index})`)
+      const details = entry?.NtryDtls?.TxDtls
+      const reference = scalar(entry?.AcctSvcrRef) || scalar(details?.Refs?.TxId) || scalar(details?.Refs?.EndToEndId) || scalar(details?.RmtInf?.Ustrd)
+      out.push({ txn_id: `camt054-${account}-${date}-${value}-${index}`, account_id: account, period: date.slice(0, 7), side: 'bank', date, amount_cents: value, reference, evidence_sha256: evidence, created_at: new Date().toISOString() })
+    }
+  }
+  if (out.length === 0) throw new BankrecError('E_BR_CSV_INVALID', 'CAMT.054 has no entries')
+  return out
+}
