@@ -33,6 +33,10 @@ dsh plugin --profile <profile> add dsh-bankrec
 
 *Fluxo: entrada local → plugin → saída local. Não exige chamada a modelo.*
 
+![Real dsh-bankrec terminal output](docs/assets/dsh-bankrec-hero.png)
+
+*Execução local real; sem modelo ou rede.*
+
 ## Instalação
 
 Instalar e verificar:
@@ -88,7 +92,7 @@ dsh --profile <profile> --dump-config | grep dsh-bankrec
 
 ### Exemplo com fixture
 
-Entrada: [`fixtures/public/mit-camt/example-camt053-a.xml`](fixtures/public/mit-camt/example-camt053-a.xml)
+Entrada: [`fixtures/public/mit-camt/example-camt053-a.xml`](https://github.com/PerryLink/dsh-bankrec/blob/main/fixtures/public/mit-camt/example-camt053-a.xml)
 
 Comando: `pnpm test`
 
@@ -138,6 +142,9 @@ pnpm build && pnpm lint && pnpm typecheck && pnpm test
 
 Pacotes irmãos e índices da família: [dsh-einvoice](https://github.com/PerryLink/dsh-einvoice) · [dsh-ap-three-way](https://github.com/PerryLink/dsh-ap-three-way) · [dsh-travel-recon](https://github.com/PerryLink/dsh-travel-recon) · [dsh-finops-suite](https://github.com/PerryLink/dsh-finops-suite)
 
+Verificadores relacionados (tabela em inglês): [Related checkers](README.md#related-checkers).
+
+- [Solução de problemas (inglês)](TROUBLESHOOTING.md)
 - [Índice de domínio](https://perrylink.github.io/dsh-plugins/)
 - [Família de checkers](https://perrylink.github.io/zh/checkers/)
 - [Família principal](https://github.com/PerryLink/dsh-kit)

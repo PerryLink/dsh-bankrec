@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.0-alpha.10] — 2026-11-01
+
+### Changed
+
+- Documentation: five-language fixture/acceptance links now resolve on npm; added specific related-checker/tool links.
+- Marketplace metadata: taxonomy category, archetype, domains and status; docs page now shows the same.
+- Added a real terminal hero (and GIF for the active docs set) plus `TROUBLESHOOTING.md`.
+
 All notable changes to `dsh-bankrec` are documented here. The format follows Keep a Changelog; this project uses alpha versions.
 
 ## [0.1.0-alpha.9] — 2026-11-01

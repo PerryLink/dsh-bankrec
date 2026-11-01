@@ -33,6 +33,10 @@ dsh plugin --profile <profile> add dsh-bankrec
 
 *वर्कफ़्लो: स्थानीय इनपुट → प्लगइन → स्थानीय आउटपुट। मॉडल कॉल आवश्यक नहीं।*
 
+![Real dsh-bankrec terminal output](docs/assets/dsh-bankrec-hero.png)
+
+*वास्तविक स्थानीय परीक्षण; कोई मॉडल या नेटवर्क कॉल नहीं।*
+
 ## इंस्टॉल
 
 इंस्टॉल और सत्यापन:
@@ -88,7 +92,7 @@ dsh --profile <profile> --dump-config | grep dsh-bankrec
 
 ### fixture-आधारित उदाहरण
 
-इनपुट: [`fixtures/public/mit-camt/example-camt053-a.xml`](fixtures/public/mit-camt/example-camt053-a.xml)
+इनपुट: [`fixtures/public/mit-camt/example-camt053-a.xml`](https://github.com/PerryLink/dsh-bankrec/blob/main/fixtures/public/mit-camt/example-camt053-a.xml)
 
 कमांड: `pnpm test`
 
@@ -138,6 +142,9 @@ pnpm build && pnpm lint && pnpm typecheck && pnpm test
 
 सहोदर पैकेज और परिवार सूचकांक: [dsh-einvoice](https://github.com/PerryLink/dsh-einvoice) · [dsh-ap-three-way](https://github.com/PerryLink/dsh-ap-three-way) · [dsh-travel-recon](https://github.com/PerryLink/dsh-travel-recon) · [dsh-finops-suite](https://github.com/PerryLink/dsh-finops-suite)
 
+संबंधित चेकर (अंग्रेज़ी तालिका): [Related checkers](README.md#related-checkers).
+
+- [समस्या निवारण (अंग्रेज़ी)](TROUBLESHOOTING.md)
 - [डोमेन सूचकांक](https://perrylink.github.io/dsh-plugins/)
 - [चेकर परिवार](https://perrylink.github.io/zh/checkers/)
 - [मुख्य परिवार](https://github.com/PerryLink/dsh-kit)

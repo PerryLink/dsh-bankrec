@@ -1,0 +1,14 @@
+[
+  {
+    "path": "docs/assets/dsh-bankrec-hero.png",
+    "kind": "hero",
+    "alt": "dsh-bankrec terminal output",
+    "caption": "Real dsh-bankrec local test run; 7 tests passed."
+  },
+  {
+    "path": "docs/assets/dsh-bankrec-demo.gif",
+    "kind": "demo",
+    "alt": "Animated dsh-bankrec terminal session",
+    "caption": "The same run, assembled line by line."
+  }
+]
