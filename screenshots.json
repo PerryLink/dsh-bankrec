@@ -1,5 +1,16 @@
 [
   {
+    "path": "docs/assets/quickstart.png",
+    "kind": "quickstart",
+    "alt": "dsh-bankrec quickstart run on the shipped synthetic sample",
+    "caption": "Real run: node samples/quickstart/run.mjs on samples/quickstart/input; output matches samples/quickstart/expected/result.json.",
+    "command": "node samples/quickstart/run.mjs",
+    "run_at": "2026-11-02T20:31:15+08:00",
+    "output_sha256": "853f9e0d390cf92c1b8810218cf28f108a5363d982532d8ca7b1c857daf435b0",
+    "log_sha256": "153b9ea6cc1c1caa37745212172871f59a4beb5adc50935486d3e7310e336505",
+    "log": "docs/assets/quickstart.txt"
+  },
+  {
     "path": "docs/assets/dsh-bankrec-hero.png",
     "kind": "hero",
     "alt": "dsh-bankrec terminal output",

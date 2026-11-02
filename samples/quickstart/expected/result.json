@@ -1,0 +1,51 @@
+{
+  "package": "dsh-bankrec",
+  "sample": "synthetic/quickstart",
+  "account_id": "ACC-SYN-001",
+  "period": "2026-03",
+  "bank_rows": 6,
+  "gl_rows": 6,
+  "matched": 5,
+  "unmatched_bank": [
+    "TRANSFER-01"
+  ],
+  "unmatched_gl": [
+    "TRANSFER-02"
+  ],
+  "workpaper": {
+    "sheets": [
+      "Bank",
+      "GL",
+      "Matches"
+    ],
+    "rows": [
+      7,
+      7,
+      6
+    ]
+  },
+  "camt053": {
+    "rows": 2,
+    "opening_cents": 100000,
+    "closing_cents": 182000,
+    "net_cents": 82000,
+    "difference_cents": 0,
+    "balanced": true
+  },
+  "camt054_rows": 2,
+  "camt056_requests": 1,
+  "camt056_reason_codes": [
+    "DUPL"
+  ],
+  "mt940_rows": 2,
+  "iban": {
+    "valid": true,
+    "country": "DE"
+  },
+  "input_sha256": {
+    "bank.csv": "6ba709dec9cc8a4d7d87a3abc8d5f9acc46a46f329a9d1a321495c0f0c2770b2",
+    "gl.csv": "8b321a6e18237ecf842ebb5fb7e3d446280fe5416753b21c5dd4862084ccff10",
+    "camt053.xml": "024f511849ac421b0f2ce2887911a794e670c29e9cd079c11c0a16f73f2d7b93",
+    "mt940.sta": "57b1fe0247285dbc72006472c4a009894aab1c622d24945223d785f60a64b89a"
+  }
+}

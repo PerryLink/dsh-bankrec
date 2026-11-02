@@ -37,6 +37,76 @@ dsh plugin --profile <profile> add dsh-bankrec
 
 *本地真实测试运行；不调用模型或网络。*
 
+## 一句话
+
+把银行流水和总账按金额与日期逐笔勾对，输出未达行与三表底稿。
+
+## 适合 / 不适合
+
+- **适合**：几十到几百笔的银行流水与总账 CSV，或 CAMT.053 / CAMT.054 / CAMT.056、MT940 对账单；需要一份能交给同事复核的三表底稿。
+- **不适合**：需要自动调账、回写银行或 ERP 的场景；本包只做本地核对，不替你做审批结论。
+
+## 输入
+
+- 银行流水 CSV、总账 CSV：UTF-8，第一行表头至少 `date,amount`，可选 `reference`；日期 `YYYY-MM-DD`，金额最多两位小数，支出用负数。
+- CAMT.053 / CAMT.054 / CAMT.056 XML（ISO 20022），或 MT940 文本（含 `:25:` 与 `:61:`）。
+- IBAN 字符串（ISO 13616），用于校验。
+- 工具不设硬性大小上限；建议单个文件 ≤5 MB。自带样例在 `samples/quickstart/input/`（合成数据，远小于 500 KB）。
+
+## 输出
+
+- 终端摘要：对上几笔、银行未达几笔、总账未达几笔。
+- 三表底稿：`$DSH_HOME/storages/dsh-bankrec/exports/<账户>-<期间>.xlsx`，工作表 `Bank` / `GL` / `Matches`。
+- 原文件不会被修改。
+
+## 示例
+
+直接复制这句话：
+
+> 帮我用自带样例跑一次银行流水对账，告诉我匹配了几笔、还有哪几笔没对上，并导出三张表的底稿。
+
+也可以自己跑（真实运行，截图即来自这条命令）：
+
+```sh
+node samples/quickstart/run.mjs
+```
+
+![dsh-bankrec quickstart 真实运行输出](docs/assets/quickstart.png)
+
+*合成样例 → 金标 `samples/quickstart/expected/result.json`；命令与哈希见 `screenshots.json`。*
+
+## 权限
+
+- 读：你指定的银行流水 / 总账 CSV、CAMT XML、MT940 文本与 IBAN（由会话读取后作为参数传入）；不读其他目录
+- 写：`$DSH_HOME/storages/dsh-bankrec`（对账索引与 `exports/*.xlsx`）；不改原文件
+- 联网：否（源码中没有 HTTP / DNS / WebSocket 调用）
+- 外部系统：无（不连接银行、ERP 或云服务，不上传数据）
+
+写文件的工具标 **R1（本地写）**，只读工具标 **R0**；逐项见下方工具表。
+
+## FAQ
+
+### 装不上怎么办？
+
+确认 DSH `>=0.2.1-rc.3 <0.4.0`、Node `>=24.9 <25`，并用全新的 `DSH_HOME` 重试；完整步骤见 `TROUBLESHOOTING.md`。
+
+### 金额明明一样，为什么没匹配上？
+
+匹配按「金额完全相同 + 日期相差 ≤3 天」逐笔 1:1 消费；差 1 分或日期超过 3 天都会进入未达行，请按摘要里的未达 reference 人工复核。
+
+### 能处理我的真实银行流水吗？
+
+可以本地运行，但本包是 alpha、只用公开/合成数据验证，不构成审计结论；使用真实数据前请脱敏，并保留复核人。
+
+### 会联网或上传数据吗？
+
+不会。工具、样例和导出都在本机完成。
+
+## 版本
+
+- 当前版本：`0.1.0-alpha.16`（与 `package.json` 一致）
+- 测试：`node --test test/*.test.mjs` 全绿（35 个用例，0 失败）
+
 ## 安装
 
 安装并验证：
@@ -76,10 +146,13 @@ dsh plugin --profile <profile> remove dsh-bankrec
 |---|---|---|
 | `bankrec.ingest` | 导入银行 CSV/GL 行 | R1 local write |
 | `bankrec.ingest_camt` | 导入 CAMT.053 XML | R1 local write |
+| `bankrec.ingest_camt054` | 导入 CAMT.054 借贷通知 | R1 local write |
 | `bankrec.ingest_mt940` | 导入 MT940 对账单 | R1 local write |
+| `bankrec.match` | 将银行行与 GL 行做 1:1 匹配（写入匹配状态） | R1 local write |
 | `bankrec.reconcile_camt` | 核对 CAMT 期初 + 明细 = 期末；存在歧义时要求提供 `account_id` | R0 |
-| `bankrec.match` | 将银行行与 GL 行做 1:1 匹配 | R0 |
 | `bankrec.export` | 导出含 3 个工作表的 xlsx：Bank / GL / Matches | R1 local write |
+| `bankrec.iban_check` | 校验 IBAN（ISO 13616） | R0 |
+| `bankrec.camt056_list` | 列出 CAMT.056 取消请求（只读，不执行取消） | R0 |
 
 ## 快速开始
 
@@ -88,21 +161,18 @@ dsh plugin --profile <profile> add dsh-bankrec
 dsh --profile <profile> --dump-config | grep dsh-bankrec
 ```
 
-## 示例
+## 验收示例（fixture + 快速开始）
 
-### fixture 支撑的示例
-
-输入: [`fixtures/public/mit-camt/example-camt053-a.xml`](https://github.com/PerryLink/dsh-bankrec/blob/main/fixtures/public/mit-camt/example-camt053-a.xml)
-
-命令: `pnpm test`
-
-验收行:
+- 快速开始：`samples/quickstart/`（合成数据）→ `node samples/quickstart/run.mjs`，金标 `samples/quickstart/expected/result.json`。
+- fixture：`fixtures/public/mit-camt/example-camt053-a.xml`（公开 MIT 样本）。
+- 验收：`node scripts/acceptance.mjs`，明细见 `ACCEPTANCE.csv`。
 
 | req_id | metric | threshold | actual | pass | source | counted |
 |---|---|---|---|---|---|---|
 | SKU-06-A01 | 流水解析（30） | 30/30 | 30 | true | public/synthetic | false |
+| PS1-QS01 | quickstart 样例与金标一致 | 1/1 | 1 | true | synthetic/quickstart | true |
 
-*这是 fixture 支撑的验收行，不是客户运行；没有编造输出。*
+*SKU 行是公开/合成 fixture 检查；PS1-QS01 是随包样例的本地复现，均非客户运行。*
 
 ## 边界
 
@@ -113,7 +183,7 @@ dsh --profile <profile> --dump-config | grep dsh-bankrec
 
 ## 公开样例
 
-公开/合成 fixture 在 `fixtures/`；`ACCEPTANCE.csv` 记录公开检查，全部 `counted=false`。
+公开/合成 fixture 在 `fixtures/`；自带快速开始样例在 `samples/quickstart/`（随包发布，≤500 KB）。`ACCEPTANCE.csv` 中 SKU 行 `counted=false`，PS1-QS01 为样例本地复现 `counted=true`。
 
 ## 开发
 

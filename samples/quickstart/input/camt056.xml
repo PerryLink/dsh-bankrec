@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.056.001.08">
+  <BkToCstmrCxlReq>
+    <CxlReq>
+      <Id>SYNTH-CXL-001</Id>
+      <Acct>
+        <Id>
+          <IBAN>DE89370400440532013000</IBAN>
+        </Id>
+      </Acct>
+      <Undrlyg>
+        <TxInf>
+          <OrgnlTxId>TX-ORIG-001</OrgnlTxId>
+          <OrgnlEndToEndId>E2E-001</OrgnlEndToEndId>
+          <CxlRsnInf>
+            <Rsn><Cd>DUPL</Cd></Rsn>
+          </CxlRsnInf>
+        </TxInf>
+      </Undrlyg>
+    </CxlReq>
+  </BkToCstmrCxlReq>
+</Document>

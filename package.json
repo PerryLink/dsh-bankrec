@@ -1,6 +1,6 @@
 {
   "name": "dsh-bankrec",
-  "version": "0.1.0-alpha.16",
+  "version": "0.1.0-alpha.17",
   "description": "Bank statement ingest, CAMT.053/MT940 reconciliation and 3-sheet workpaper.",
   "type": "module",
   "main": "./lib/plugin/index.js",
@@ -23,6 +23,7 @@
     "README-pt.md",
     "README-hi.md",
     "docs/assets",
+    "samples",
     "SECURITY.md",
     "PRIVACY.md",
     "CODE_OF_CONDUCT.md",
@@ -35,6 +36,20 @@
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
+    },
+    "demo": {
+      "sample": "samples/quickstart/input",
+      "prompt": "帮我用自带样例跑一次银行流水对账，告诉我匹配了几笔、还有哪几笔没对上，并导出三张表的底稿。",
+      "expect": "samples/quickstart/expected/result.json",
+      "screenshot": "docs/assets/quickstart.png",
+      "reads": [
+        "用户指定的银行流水/总账 CSV、CAMT.053/054/056 XML、MT940 文本"
+      ],
+      "writes": [
+        "$DSH_HOME/storages/dsh-bankrec"
+      ],
+      "network": false,
+      "external": []
     }
   },
   "engines": {
