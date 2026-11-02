@@ -1,0 +1,80 @@
+{
+  "run_id": "sku06-1793594726230",
+  "scope": "SKU-06-S1",
+  "status": "partial",
+  "counted": false,
+  "note": "synthetic; user-approved public/synthetic; 0 real firms",
+  "metrics": [
+    {
+      "i": "SKU-06-A01",
+      "m": "流水解析（30）",
+      "t": "30/30",
+      "a": 30,
+      "p": true
+    },
+    {
+      "i": "SKU-06-A02",
+      "m": "1:1 匹配",
+      "t": "30/30",
+      "a": 30,
+      "p": true
+    },
+    {
+      "i": "SKU-06-A03",
+      "m": "未达行",
+      "t": "0",
+      "a": 0,
+      "p": true
+    },
+    {
+      "i": "SKU-06-A04",
+      "m": "底稿 sheet",
+      "t": "3",
+      "a": 3,
+      "p": true
+    },
+    {
+      "i": "SKU-06-A05",
+      "m": "CAMT.053 公开样本行",
+      "t": "11",
+      "a": 11,
+      "p": true
+    },
+    {
+      "i": "SKU-06-A06",
+      "m": "CAMT 余额恒等式",
+      "t": "1/1",
+      "a": 1,
+      "p": true
+    },
+    {
+      "i": "SKU-06-A07",
+      "m": "MT940 公开样本行",
+      "t": "5",
+      "a": 5,
+      "p": true
+    },
+    {
+      "i": "SKU-06-A08",
+      "m": "IBAN ISO 13616 mod-97",
+      "t": "1/1",
+      "a": 1,
+      "p": true
+    },
+    {
+      "i": "SKU-06-A09",
+      "m": "CAMT.054 通知行",
+      "t": "2",
+      "a": 2,
+      "p": true
+    },
+    {
+      "i": "SKU-06-A10",
+      "m": "CAMT.056 取消请求",
+      "t": "1",
+      "a": 1,
+      "p": true
+    }
+  ],
+  "pass": true
+}

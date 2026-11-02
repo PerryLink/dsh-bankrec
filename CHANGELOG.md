@@ -1,6 +1,11 @@
 # Changelog
 
-## [0.1.0-alpha.14] — 2026-11-01
+## [0.1.0-alpha.15] — 2026-11-01
+
+### Security / Fixes
+
+- Path-traversal guard, account/period/evidence-scoped transaction ids (no cross-account overwrite), MT940 amounts parsed by grammar instead of blind dot stripping, idempotent re-import.
+
 
 ### Added
 

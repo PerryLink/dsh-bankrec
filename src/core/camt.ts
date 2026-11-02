@@ -1,6 +1,5 @@
-import { createHash } from 'node:crypto'
 import { XMLParser } from 'fast-xml-parser'
-import { BankrecError, cents } from './bankrec.js'
+import { BankrecError, cents, sha256Hex, txnId } from './bankrec.js'
 import type { TxnRecord } from '../plugin/storage.js'
 
 const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: '@_', removeNSPrefix: true, parseTagValue: false, trimValues: true, processEntities: false })
@@ -14,7 +13,7 @@ export function parseCamt(text: string, accountOverride?: string, evidenceSha?: 
   try { root = parser.parse(text) } catch { throw new BankrecError('E_BR_CSV_INVALID', 'CAMT XML is not parseable') }
   const statements = asArray(asObject(root?.Document)?.BkToCstmrStmt?.Stmt)
   if (statements.length === 0) throw new BankrecError('E_BR_CSV_INVALID', 'CAMT has no BkToCstmrStmt/Stmt')
-  const evidence = evidenceSha ?? createHash('sha256').update(text).digest('hex')
+  const evidence = evidenceSha ?? sha256Hex(text)
   const out: TxnRecord[] = []
   for (const stmt of statements) {
     const iban = scalar(stmt?.Acct?.Id?.IBAN) || scalar(stmt?.Acct?.Id?.Othr?.Id)
@@ -28,7 +27,8 @@ export function parseCamt(text: string, accountOverride?: string, evidenceSha?: 
       if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new BankrecError('E_BR_CSV_INVALID', `CAMT entry has no booking date (${index})`)
       const details = entry?.NtryDtls?.TxDtls
       const reference = scalar(entry?.AcctSvcrRef) || scalar(details?.Refs?.TxId) || scalar(details?.Refs?.EndToEndId) || scalar(details?.RmtInf?.Ustrd) || scalar(details?.RmtInf?.Strd?.CdtrRefInf?.Ref) || 'camt'
-      out.push({ txn_id: `camt-${account}-${date}-${value}-${index}`, account_id: account, period: date.slice(0, 7), side: 'bank', date, amount_cents: value, reference, evidence_sha256: evidence, created_at: new Date().toISOString() })
+      const period = date.slice(0, 7)
+      out.push({ txn_id: txnId('camt', account, period, evidence, [date, value, reference, out.length]), account_id: account, period, side: 'bank', date, amount_cents: value, reference, evidence_sha256: evidence, created_at: new Date().toISOString() })
     }
   }
   if (out.length === 0) throw new BankrecError('E_BR_CSV_INVALID', 'CAMT has no entries')
@@ -62,7 +62,7 @@ export function parseCamt054(text: string, accountOverride?: string, evidenceSha
   try { root = parser.parse(text) } catch { throw new BankrecError('E_BR_CSV_INVALID', 'CAMT.054 XML is not parseable') }
   const notifications = asArray(asObject(root?.Document)?.BkToCstmrDbtCdtNtfctn?.Ntfctn)
   if (notifications.length === 0) throw new BankrecError('E_BR_CSV_INVALID', 'CAMT.054 has no BkToCstmrDbtCdtNtfctn/Ntfctn')
-  const evidence = evidenceSha ?? createHash('sha256').update(text).digest('hex')
+  const evidence = evidenceSha ?? sha256Hex(text)
   const out: TxnRecord[] = []
   for (const notification of notifications) {
     const iban = scalar(notification?.Acct?.Id?.IBAN) || scalar(notification?.Acct?.Id?.Othr?.Id)
@@ -77,7 +77,8 @@ export function parseCamt054(text: string, accountOverride?: string, evidenceSha
       if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new BankrecError('E_BR_CSV_INVALID', `CAMT.054 entry has no booking date (${index})`)
       const details = entry?.NtryDtls?.TxDtls
       const reference = scalar(entry?.AcctSvcrRef) || scalar(details?.Refs?.TxId) || scalar(details?.Refs?.EndToEndId) || scalar(details?.RmtInf?.Ustrd)
-      out.push({ txn_id: `camt054-${account}-${date}-${value}-${index}`, account_id: account, period: date.slice(0, 7), side: 'bank', date, amount_cents: value, reference, evidence_sha256: evidence, created_at: new Date().toISOString() })
+      const period = date.slice(0, 7)
+      out.push({ txn_id: txnId('camt054', account, period, evidence, [date, value, reference, out.length]), account_id: account, period, side: 'bank', date, amount_cents: value, reference, evidence_sha256: evidence, created_at: new Date().toISOString() })
     }
   }
   if (out.length === 0) throw new BankrecError('E_BR_CSV_INVALID', 'CAMT.054 has no entries')

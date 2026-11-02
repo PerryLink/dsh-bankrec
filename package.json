@@ -1,6 +1,6 @@
 {
   "name": "dsh-bankrec",
-  "version": "0.1.0-alpha.14",
+  "version": "0.1.0-alpha.15",
   "description": "Bank statement ingest, CAMT.053/MT940 reconciliation and 3-sheet workpaper.",
   "type": "module",
   "main": "./lib/plugin/index.js",
@@ -38,7 +38,7 @@
     }
   },
   "engines": {
-    "dsh": ">=0.2.1-rc.3 <0.3.0",
+    "dsh": ">=0.2.1-rc.3 <0.4.0",
     "node": ">=24.9.0 <25"
   },
   "packageManager": "pnpm@11.28.5",
@@ -71,9 +71,9 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": ">=4.0.5 <5",
-    "@deepseek-ai/dsh-storage-domain": ">=0.2.1-rc.3 <0.3.0",
-    "@deepseek-ai/dsh-tools": ">=0.2.1-rc.3 <0.3.0"
+    "@deepseek-ai/cordis": ">=4.0.5 <5.0.0",
+    "@deepseek-ai/dsh-storage-domain": ">=0.2.1-rc.3 <0.4.0",
+    "@deepseek-ai/dsh-tools": ">=0.2.1-rc.3 <0.4.0"
   },
   "dependencies": {
     "fast-xml-parser": "5.11.2",
