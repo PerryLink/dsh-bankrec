@@ -1,11 +1,11 @@
 req_id,metric,threshold,actual,script,evidence_sha256,pass,source,counted
-SKU-06-A01,流水解析（30）,30/30,30,scripts/acceptance.mjs,daf2f7373ba0f3a38a365479359e4bc0d6c9421d2efda89c63b8205181eee185,true,public/synthetic,false
-SKU-06-A02,1:1 匹配,30/30,30,scripts/acceptance.mjs,daf2f7373ba0f3a38a365479359e4bc0d6c9421d2efda89c63b8205181eee185,true,public/synthetic,false
-SKU-06-A03,未达行,0,0,scripts/acceptance.mjs,daf2f7373ba0f3a38a365479359e4bc0d6c9421d2efda89c63b8205181eee185,true,public/synthetic,false
-SKU-06-A04,底稿 sheet,3,3,scripts/acceptance.mjs,daf2f7373ba0f3a38a365479359e4bc0d6c9421d2efda89c63b8205181eee185,true,public/synthetic,false
-SKU-06-A05,CAMT.053 公开样本行,11,11,scripts/acceptance.mjs,daf2f7373ba0f3a38a365479359e4bc0d6c9421d2efda89c63b8205181eee185,true,public/synthetic,false
-SKU-06-A06,CAMT 余额恒等式,1/1,1,scripts/acceptance.mjs,daf2f7373ba0f3a38a365479359e4bc0d6c9421d2efda89c63b8205181eee185,true,public/synthetic,false
-SKU-06-A07,MT940 公开样本行,5,5,scripts/acceptance.mjs,daf2f7373ba0f3a38a365479359e4bc0d6c9421d2efda89c63b8205181eee185,true,public/synthetic,false
-SKU-06-A08,IBAN ISO 13616 mod-97,1/1,1,scripts/acceptance.mjs,daf2f7373ba0f3a38a365479359e4bc0d6c9421d2efda89c63b8205181eee185,true,public/synthetic,false
-SKU-06-A09,CAMT.054 通知行,2,2,scripts/acceptance.mjs,daf2f7373ba0f3a38a365479359e4bc0d6c9421d2efda89c63b8205181eee185,true,public/synthetic,false
-SKU-06-A10,CAMT.056 取消请求,1,1,scripts/acceptance.mjs,daf2f7373ba0f3a38a365479359e4bc0d6c9421d2efda89c63b8205181eee185,true,public/synthetic,false
+SKU-06-A01,流水解析（30）,30/30,30,scripts/acceptance.mjs,74a3f023dfeb4b80f9dea5dd98a320fa420f1df7aa0874a6ac9032b1692fe778,true,public/synthetic,false
+SKU-06-A02,1:1 匹配,30/30,30,scripts/acceptance.mjs,74a3f023dfeb4b80f9dea5dd98a320fa420f1df7aa0874a6ac9032b1692fe778,true,public/synthetic,false
+SKU-06-A03,未达行,0,0,scripts/acceptance.mjs,74a3f023dfeb4b80f9dea5dd98a320fa420f1df7aa0874a6ac9032b1692fe778,true,public/synthetic,false
+SKU-06-A04,底稿 sheet,3,3,scripts/acceptance.mjs,74a3f023dfeb4b80f9dea5dd98a320fa420f1df7aa0874a6ac9032b1692fe778,true,public/synthetic,false
+SKU-06-A05,CAMT.053 公开样本行,11,11,scripts/acceptance.mjs,74a3f023dfeb4b80f9dea5dd98a320fa420f1df7aa0874a6ac9032b1692fe778,true,public/synthetic,false
+SKU-06-A06,CAMT 余额恒等式,1/1,1,scripts/acceptance.mjs,74a3f023dfeb4b80f9dea5dd98a320fa420f1df7aa0874a6ac9032b1692fe778,true,public/synthetic,false
+SKU-06-A07,MT940 公开样本行,5,5,scripts/acceptance.mjs,74a3f023dfeb4b80f9dea5dd98a320fa420f1df7aa0874a6ac9032b1692fe778,true,public/synthetic,false
+SKU-06-A08,IBAN ISO 13616 mod-97,1/1,1,scripts/acceptance.mjs,74a3f023dfeb4b80f9dea5dd98a320fa420f1df7aa0874a6ac9032b1692fe778,true,public/synthetic,false
+SKU-06-A09,CAMT.054 通知行,2,2,scripts/acceptance.mjs,74a3f023dfeb4b80f9dea5dd98a320fa420f1df7aa0874a6ac9032b1692fe778,true,public/synthetic,false
+SKU-06-A10,CAMT.056 取消请求,1,1,scripts/acceptance.mjs,74a3f023dfeb4b80f9dea5dd98a320fa420f1df7aa0874a6ac9032b1692fe778,true,public/synthetic,false
