@@ -39,3 +39,50 @@ test('cancellation requests expose original ids and reasons', async () => {
 test('a document without cancellation requests is rejected', () => {
   assert.throws(() => parseCamt056('<Document><BkToCstmrStmt/></Document>'), /E_BR_CSV_INVALID/)
 })
+
+// ISO 20022 names FIToFIPmtCxlReq as the camt.056 root element; BkToCstmrCxlReq is a
+// market variant. Real bank feeds use the standard root and were rejected outright.
+const standardXml = `<?xml version="1.0"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.056.001.08">
+  <FIToFIPmtCxlReq>
+    <GrpHdr><MsgId>STD-1</MsgId><CreDtTm>2026-11-05T10:00:00</CreDtTm></GrpHdr>
+    <CxlReq>
+      <Id>CXL-STD-1</Id>
+      <Undrlyg><TxInf>
+        <OrgnlInstrId>INS-9</OrgnlInstrId>
+        <OrgnlEndToEndId>E2E-STD-1</OrgnlEndToEndId>
+        <CxlRsnInf><Rsn><Cd>DUPL</Cd></Rsn></CxlRsnInf>
+        <OrgnlTxRef><Acct><Id><IBAN>DE89370400440532013000</IBAN></Id></Acct></OrgnlTxRef>
+      </TxInf></Undrlyg>
+    </CxlReq>
+  </FIToFIPmtCxlReq>
+</Document>`
+
+test('the ISO 20022 root FIToFIPmtCxlReq is accepted', () => {
+  const r = parseCamt056(standardXml)
+  assert.equal(r.length, 1)
+  assert.equal(r[0].original_end_to_end_id, 'E2E-STD-1')
+  assert.equal(r[0].reason_code, 'DUPL')
+  assert.equal(r[0].account, 'DE89370400440532013000')
+})
+
+test('original_tx_id falls back to OrgnlInstrId when OrgnlTxId is absent', () => {
+  assert.equal(parseCamt056(standardXml)[0].original_tx_id, 'INS-9')
+})
+
+test('proprietary reason (CxlRsn/Prtry) and non-IBAN account (Othr/Id) are readable', () => {
+  const r = parseCamt056(`<?xml version="1.0"?>
+<Document><FIToFIPmtCxlReq>
+  <CxlReq><Id>CXL-O-1</Id>
+    <Undrlyg><TxInf>
+      <OrgnlInstrId>A-1</OrgnlInstrId>
+      <OrgnlEndToEndId>E2E-O-1</OrgnlEndToEndId>
+      <CxlRsn><Prtry>customer request</Prtry></CxlRsn>
+      <OrgnlTxRef><Acct><Id><Othr><Id>6222020200123456789</Id></Othr></Id></Acct></OrgnlTxRef>
+    </TxInf></Undrlyg>
+  </CxlReq>
+</FIToFIPmtCxlReq></Document>`)
+  assert.equal(r.length, 1)
+  assert.equal(r[0].reason_code, 'customer request')
+  assert.equal(r[0].account, '6222020200123456789')
+})
