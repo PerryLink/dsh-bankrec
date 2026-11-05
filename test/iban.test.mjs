@@ -36,3 +36,21 @@ test('tool exposes the same result', async () => {
   assert.equal(r.valid, true)
   assert.equal(r.country, 'GB')
 })
+
+// Regression guard: the harness validates tool output against the declared schema with
+// `additionalProperties: false`, so an undeclared key makes EVERY call fail at runtime
+// even though `execute()` returns the right thing. ibanCheck() returns `bban_length`,
+// which the schema used to omit. This test fails if a returned key is ever undeclared.
+test('every key returned by execute() is declared in the tool output schema', async () => {
+  const tool = tools['bankrec.iban_check']
+  const declared = new Set(Object.keys(tool.output.schema.properties))
+  for (const iban of ['DE89370400440532013000', 'DE89370400440532013001', 'DE89-3704-0044']) {
+    const r = await tool.execute({ iban }, { callId: 'schema' })
+    for (const key of Object.keys(r)) {
+      assert.ok(declared.has(key), `output key "${key}" is not declared in the tool schema`)
+    }
+    for (const key of declared) {
+      assert.ok(tool.output.schema.properties[key].required === undefined || key in r, `required key "${key}" is missing from the output`)
+    }
+  }
+})

@@ -92,22 +92,28 @@ export interface Camt056Request {
   reason_code: string
   account: string
 }
-/** camt.056 payment cancellation requests (BkToCstmrCxlReq/CxlReq) — read-only extraction. */
+/** camt.056 payment cancellation requests (BkToCstmrCxlReq / FIToFIPmtCxlReq) — read-only extraction. */
 export function parseCamt056(text: string): Camt056Request[] {
   let root: any
   try { root = parser.parse(text) } catch { throw new BankrecError('E_BR_CSV_INVALID', 'CAMT.056 XML is not parseable') }
-  const requests = asArray(asObject(root?.Document)?.BkToCstmrCxlReq?.CxlReq)
-  if (requests.length === 0) throw new BankrecError('E_BR_CSV_INVALID', 'CAMT.056 has no BkToCstmrCxlReq/CxlReq')
+  const doc = asObject(root?.Document) ?? asObject(root)
+  const messageRoots = ['BkToCstmrCxlReq', 'FIToFIPmtCxlReq', 'BkToCstmrCxlReqV02', 'FIToFIPmtCxlReqV02']
+  let requests: any[] = []
+  for (const key of messageRoots) {
+    requests = asArray(asObject(doc)?.[key]?.CxlReq)
+    if (requests.length > 0) break
+  }
+  if (requests.length === 0) throw new BankrecError('E_BR_CSV_INVALID', 'CAMT.056 has no CxlReq (accepted roots: BkToCstmrCxlReq, FIToFIPmtCxlReq)')
   const out: Camt056Request[] = []
   for (const [index, req] of requests.entries()) {
     const infos = asArray(req?.Undrlyg?.TxInf)
     for (const [inner, tx] of infos.entries()) {
       out.push({
         cancellation_id: `${scalar(req?.Id) || 'cxl'}-${index}-${inner}`,
-        original_tx_id: scalar(tx?.OrgnlTxId),
+        original_tx_id: scalar(tx?.OrgnlTxId) || scalar(tx?.OrgnlInstrId),
         original_end_to_end_id: scalar(tx?.OrgnlEndToEndId),
-        reason_code: scalar(tx?.CxlRsnInf?.Rsn?.Cd) || scalar(tx?.CxlRsnInf?.Rsn?.Prtry),
-        account: scalar(tx?.OrgnlTxRef?.Acct?.Id?.IBAN) || scalar(req?.Acct?.Id?.IBAN),
+        reason_code: scalar(tx?.CxlRsnInf?.Rsn?.Cd) || scalar(tx?.CxlRsnInf?.Rsn?.Prtry) || scalar(tx?.CxlRsn?.Cd) || scalar(tx?.CxlRsn?.Prtry),
+        account: scalar(tx?.OrgnlTxRef?.Acct?.Id?.IBAN) || scalar(req?.Acct?.Id?.IBAN) || scalar(tx?.OrgnlTxRef?.Acct?.Id?.Othr?.Id) || scalar(req?.Acct?.Id?.Othr?.Id),
       })
     }
   }
