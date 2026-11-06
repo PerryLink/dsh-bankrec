@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-bankrec-flow-dark.svg">
-  <img src="docs/assets/dsh-bankrec-flow-light.svg" width="100%" alt="dsh-bankrec data flow: bank CSV / CAMT.053/054 / MT940 → bankrec.ingest → local storageDomain → bankrec.match / reconcile_camt → bankrec.export 3-sheet xlsx">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-bankrec-hero-en-dark.webp">
+  <img src="docs/assets/dsh-bankrec-hero-en-light.webp" width="100%" alt="dsh-bankrec match board: six BANK rows on the left and six GL rows on the right, matched 1:1 by exact amount and a date delta within three days; five pairs carry green delta chips; TRANSFER-01 and TRANSFER-02 are five days apart and stay unmatched; the board closes with Bank 6 / GL 6 / Matches 5 sheet tabs">
 </picture>
 
 # dsh-bankrec
@@ -41,6 +41,11 @@ dsh plugin --profile <profile> add dsh-bankrec
 
 - **Good fit**: tens to hundreds of bank-statement and GL CSV rows, or CAMT.053 / CAMT.054 / CAMT.056 and MT940 statements — when you need a 3-sheet workpaper a colleague can review.
 - **Not a fit**: automatic posting adjustments or write-backs to a bank or ERP; this package only checks locally and never makes the approval decision for you.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-bankrec-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-bankrec-flow-v5-light.svg" width="100%" alt="dsh-bankrec structure: the BANK side (CSV / CAMT.053/054 / MT940) and the GL side (CSV) ingest into the local transactions table; the MATCH GATE consumes pairs 1:1 by exact amount_cents and a date delta within three days, writing five matches; accepted pairs become the Bank / GL / Matches xlsx workpaper; two boundary rails follow: unmatched rows (TRANSFER-01 / TRANSFER-02, five days apart) and the read-only CAMT balance identity (1000.00 + 820.00 = 1820.00, diff 0.00)">
+</picture>
 
 ## Three-step setup
 
@@ -243,7 +248,7 @@ pnpm run pack:check                                      # published-content dry
 node samples/quickstart/run.mjs                          # replay the bundled synthetic sample
 ```
 
-TypeScript sources live in `src/` (`src/core/` for parsing and matching, `src/plugin/` for the host face); build output lands in `lib/`; fixtures in `fixtures/`; the bundled sample in `samples/quickstart/`. The hero flow diagram is generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python; writes `docs/assets/dsh-bankrec-flow-{light,dark}.svg`) and is safe to re-run.
+TypeScript sources live in `src/` (`src/core/` for parsing and matching, `src/plugin/` for the host face); build output lands in `lib/`; fixtures in `fixtures/`; the bundled sample in `samples/quickstart/`. The hero and the structure diagram are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python/Pillow plus hand-written SVG; writes `docs/assets/dsh-bankrec-hero-{zh,en}-{light,dark}.webp` and `docs/assets/dsh-bankrec-flow-v5-{light,dark}.svg`) and are safe to re-run.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `bank-rec`, `reconciliation`, `finance`, `perrylink`, `camt`, `mt940`
 

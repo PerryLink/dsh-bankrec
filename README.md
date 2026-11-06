@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-bankrec-flow-dark.svg">
-  <img src="docs/assets/dsh-bankrec-flow-light.svg" width="100%" alt="dsh-bankrec 数据流：银行 CSV / CAMT.053/054 / MT940 → bankrec.ingest 入库 → 本地 storageDomain → bankrec.match / reconcile_camt 对账 → bankrec.export 三表 xlsx">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-bankrec-hero-zh-dark.webp">
+  <img src="docs/assets/dsh-bankrec-hero-zh-light.webp" width="100%" alt="dsh-bankrec 配对看板：左侧 BANK 六行与右侧 GL 六行按金额完全相同、日期差 ≤3 天逐笔 1:1 勾对，5 对带绿色日期差；TRANSFER-01 与 TRANSFER-02 相差 5 天未达；底部 Bank 6 / GL 6 / Matches 5 三张表页签">
 </picture>
 
 # dsh-bankrec
@@ -41,6 +41,11 @@ dsh plugin --profile <profile> add dsh-bankrec
 
 - **适合**：几十到几百笔的银行流水与总账 CSV，或 CAMT.053 / CAMT.054 / CAMT.056、MT940 对账单；需要一份能交给同事复核的三表底稿。
 - **不适合**：需要自动调账、回写银行或 ERP 的场景；本包只做本地核对，不替你做审批结论。
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-bankrec-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-bankrec-flow-v5-light.svg" width="100%" alt="dsh-bankrec 结构：BANK 侧（CSV / CAMT.053/054 / MT940）与 GL 侧（CSV）分别入库到本地 transactions 表；MATCH GATE 按 amount_cents 完全相同、|日期差| ≤3 天逐笔 1:1 消费，5 对命中并写入 matches；右侧导出 Bank / GL / Matches 三表 xlsx；底部两条边界：未达行（TRANSFER-01 / TRANSFER-02，5 天 > 3 天）与 CAMT 余额恒等（1000.00 + 820.00 = 1820.00，diff 0.00，只读）">
+</picture>
 
 ## 三步上手
 
@@ -243,7 +248,7 @@ pnpm run pack:check                                      # 发布内容 dry-run 
 node samples/quickstart/run.mjs                          # 合成样例本地复现
 ```
 
-TypeScript 源码在 `src/`（`src/core/` 解析与匹配、`src/plugin/` 宿主面），构建产物在 `lib/`；fixture 在 `fixtures/`，随包样例在 `samples/quickstart/`。开头流程图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python，输出 `docs/assets/dsh-bankrec-flow-{light,dark}.svg`），可重复执行。
+TypeScript 源码在 `src/`（`src/core/` 解析与匹配、`src/plugin/` 宿主面），构建产物在 `lib/`；fixture 在 `fixtures/`，随包样例在 `samples/quickstart/`。开头 hero 与结构图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python/Pillow + 手写 SVG，输出 `docs/assets/dsh-bankrec-hero-{zh,en}-{light,dark}.webp` 与 `docs/assets/dsh-bankrec-flow-v5-{light,dark}.svg`），可重复执行。
 
 Topics：`deepseek-harness`, `dsh`, `dsh-plugin`, `bank-rec`, `reconciliation`, `finance`, `perrylink`, `camt`, `mt940`
 

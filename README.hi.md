@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-bankrec-flow-dark.svg">
-  <img src="docs/assets/dsh-bankrec-flow-light.svg" width="100%" alt="dsh-bankrec डेटा प्रवाह: बैंक CSV / CAMT.053/054 / MT940 → bankrec.ingest → स्थानीय storageDomain → bankrec.match / reconcile_camt → bankrec.export 3-शीट xlsx">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-bankrec-hero-en-dark.webp">
+  <img src="docs/assets/dsh-bankrec-hero-en-light.webp" width="100%" alt="dsh-bankrec मिलान बोर्ड: बाएँ बैंक की छह पंक्तियाँ और दाएँ GL की छह पंक्तियाँ, सटीक राशि और 3 दिनों तक की तिथि अंतर से 1:1 मिलान; पाँच जोड़ों पर हरा अंतर चिह्न; TRANSFER-01 और TRANSFER-02 पाँच दिन के अंतर से अमिलान; अंत में Bank 6 / GL 6 / Matches 5 शीट टैब">
 </picture>
 
 # dsh-bankrec
@@ -41,6 +41,11 @@ dsh plugin --profile <profile> add dsh-bankrec
 
 - **किसके लिए उपयुक्त**: कुछ दसियों से कुछ सैकड़ों बैंक-स्टेटमेंट और GL CSV पंक्तियाँ, या CAMT.053 / CAMT.054 / CAMT.056 और MT940 स्टेटमेंट; जब आपको ऐसा 3-शीट वर्कपेपर चाहिए जिसे कोई सहकर्मी समीक्षा कर सके।
 - **किसके लिए नहीं**: स्वचालित पोस्टिंग समायोजन या बैंक/ERP में वापस-लेखन; यह पैकेज केवल स्थानीय जाँच करता है और आपके लिए अनुमोदन निर्णय नहीं लेता।
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-bankrec-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-bankrec-flow-v5-light.svg" width="100%" alt="dsh-bankrec संरचना: बैंक पक्ष (CSV / CAMT.053/054 / MT940) और GL पक्ष (CSV) स्थानीय transactions तालिका में इनजेस्ट होते हैं; MATCH GATE सटीक amount_cents और 3 दिनों तक के तिथि अंतर से जोड़े 1:1 उपभोग करता है और 5 मिलान लिखता है; स्वीकृत जोड़े Bank / GL / Matches xlsx में निर्यात होते हैं; नीचे दो सीमा पट्टियाँ: अमिलान पंक्तियाँ (TRANSFER-01 / TRANSFER-02, 5 दिन) और केवल-पठन CAMT शेष पहचान (1000.00 + 820.00 = 1820.00, diff 0.00)">
+</picture>
 
 ## तीन चरणों में शुरुआत
 
@@ -243,7 +248,7 @@ pnpm run pack:check                                      # प्रकाशि
 node samples/quickstart/run.mjs                          # bundled सिंथेटिक नमूना दोबारा चलाएँ
 ```
 
-TypeScript स्रोत `src/` में हैं (`src/core/` पार्सिंग और मिलान के लिए, `src/plugin/` होस्ट फ़ेस के लिए); बिल्ड आउटपुट `lib/` में; fixtures `fixtures/` में; bundled नमूना `samples/quickstart/` में। शीर्षक प्रवाह-आरेख [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) द्वारा प्रोग्रामेटिक रूप से बनता है (Python; `docs/assets/dsh-bankrec-flow-{light,dark}.svg` लिखता है) और सुरक्षित रूप से दोबारा चलाया जा सकता है।
+TypeScript स्रोत `src/` में हैं (`src/core/` पार्सिंग और मिलान के लिए, `src/plugin/` होस्ट फ़ेस के लिए); बिल्ड आउटपुट `lib/` में; fixtures `fixtures/` में; bundled नमूना `samples/quickstart/` में। hero और संरचना आरेख [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) द्वारा प्रोग्रामेटिक रूप से बनते हैं (Python/Pillow और हस्तलिखित SVG; `docs/assets/dsh-bankrec-hero-{zh,en}-{light,dark}.webp` तथा `docs/assets/dsh-bankrec-flow-v5-{light,dark}.svg` लिखता है) और सुरक्षित रूप से दोबारा चलाए जा सकते हैं।
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `bank-rec`, `reconciliation`, `finance`, `perrylink`, `camt`, `mt940`
 

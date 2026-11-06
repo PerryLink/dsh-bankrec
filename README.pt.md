@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-bankrec-flow-dark.svg">
-  <img src="docs/assets/dsh-bankrec-flow-light.svg" width="100%" alt="Fluxo de dados do dsh-bankrec: CSV bancário / CAMT.053/054 / MT940 → bankrec.ingest → storageDomain local → bankrec.match / reconcile_camt → bankrec.export xlsx de 3 abas">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-bankrec-hero-en-dark.webp">
+  <img src="docs/assets/dsh-bankrec-hero-en-light.webp" width="100%" alt="Painel de conciliação do dsh-bankrec: seis linhas do banco à esquerda e seis do GL à direita, conciliadas 1:1 por valor exato e diferença de datas de até 3 dias; cinco pares trazem a diferença em verde; TRANSFER-01 e TRANSFER-02 ficam sem conciliar por 5 dias; o painel fecha com as abas Bank 6 / GL 6 / Matches 5">
 </picture>
 
 # dsh-bankrec
@@ -41,6 +41,11 @@ O `dsh-bankrec` ingere extratos bancários (CSV, CAMT.053/054/056, MT940) e CSV 
 
 - **Indicado para**: dezenas a centenas de linhas de extratos bancários e CSV do GL, ou extratos CAMT.053 / CAMT.054 / CAMT.056 e MT940; quando você precisa de uma planilha de trabalho de 3 abas que um colega possa revisar.
 - **Não indicado para**: ajustes automáticos de lançamentos ou reescrita para um banco ou ERP; este pacote só confere localmente e não toma a decisão de aprovação por você.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-bankrec-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-bankrec-flow-v5-light.svg" width="100%" alt="Estrutura do dsh-bankrec: o lado do banco (CSV / CAMT.053/054 / MT940) e o lado GL (CSV) são ingeridos na tabela local transactions; a MATCH GATE consome pares 1:1 por amount_cents exato e diferença de datas de até 3 dias, gravando 5 correspondências; os pares aceitos viram um xlsx com Bank / GL / Matches; duas faixas de fronteira: linhas não conciliadas (TRANSFER-01 / TRANSFER-02, 5 dias) e a identidade de saldo CAMT somente leitura (1000.00 + 820.00 = 1820.00, diff 0.00)">
+</picture>
 
 ## Instalação em três passos
 
@@ -243,7 +248,7 @@ pnpm run pack:check                                      # verificação dry-run
 node samples/quickstart/run.mjs                          # reproduz a amostra sintética incluída
 ```
 
-O código TypeScript fica em `src/` (`src/core/` para parsing e conciliação, `src/plugin/` para a face do hospedeiro); a saída de build vai para `lib/`; as fixtures em `fixtures/`; a amostra incluída em `samples/quickstart/`. O diagrama de fluxo do topo é gerado programaticamente por [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python; escreve `docs/assets/dsh-bankrec-flow-{light,dark}.svg`) e pode ser reexecutado com segurança.
+O código TypeScript fica em `src/` (`src/core/` para parsing e conciliação, `src/plugin/` para a face do hospedeiro); a saída de build vai para `lib/`; as fixtures em `fixtures/`; a amostra incluída em `samples/quickstart/`. O hero e o diagrama de estrutura são gerados programaticamente por [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python/Pillow e SVG escrito à mão; escreve `docs/assets/dsh-bankrec-hero-{zh,en}-{light,dark}.webp` e `docs/assets/dsh-bankrec-flow-v5-{light,dark}.svg`) e podem ser reexecutados com segurança.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `bank-rec`, `reconciliation`, `finance`, `perrylink`, `camt`, `mt940`
 
