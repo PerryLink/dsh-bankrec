@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2] — 2026-11-13
+
+### Fixed
+
+- **CAMT.056 now accepts the ISO 20022 root.** `camt056_list` only looked under `BkToCstmrCxlReq/CxlReq`; the standard root element is `FIToFIPmtCxlReq`, so real bank feeds were rejected with `E_BR_CSV_INVALID`. Both roots are accepted, together with `OrgnlInstrId` as the original-transaction-id fallback, proprietary reason codes (`CxlRsn/Prtry`) and non-IBAN accounts (`Othr/Id`). (#8, fixes #7)
+- **`iban_check` declares `bban_length`.** The output schema listed four of the five keys `ibanCheck()` returns while setting `additionalProperties: false`, so every call failed harness schema validation even though `execute()` returned the right object. A regression test now asserts that every returned key is declared. (fixes #7)
+
 ## [0.1.0] — 2026-11-02
 
 ### Stable
