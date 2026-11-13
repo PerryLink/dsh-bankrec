@@ -31,7 +31,7 @@
 <text x="170.0" y="182.04" fill="#8496f5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="400" text-anchor="middle">CAMT.053/054</text>
 <rect x="58" y="192" width="62" height="22" rx="11.0" fill="#242d42"/>
 <text x="89.0" y="208.04" fill="#8496f5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="400" text-anchor="middle">MT940</text>
-<text x="58" y="236" fill="#f0f3f9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="700" text-anchor="start">bankrec.ingest</text>
+<text x="58" y="236" fill="#f0f3f9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="700" text-anchor="start">bankrec_ingest</text>
 <text x="58" y="254" fill="#a8b1c4" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="400" text-anchor="start">ingest_camt · ingest_mt940</text>
 <text x="58" y="272" fill="#a8b1c4" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="400" text-anchor="start">ingest_camt054 · sha256</text>
 <g filter="url(#soft)">
@@ -43,14 +43,14 @@
 <rect x="58" y="342" width="46" height="22" rx="11.0" fill="#242d42"/>
 <text x="81.0" y="358.04" fill="#8496f5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="400" text-anchor="middle">CSV</text>
 <text x="112" y="358" fill="#a8b1c4" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13.5" font-weight="400" text-anchor="start">date,amount[,reference]</text>
-<text x="58" y="388" fill="#f0f3f9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="700" text-anchor="start">bankrec.ingest</text>
+<text x="58" y="388" fill="#f0f3f9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="700" text-anchor="start">bankrec_ingest</text>
 <text x="58" y="410" fill="#a8b1c4" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="400" text-anchor="start">date · amount_cents</text>
 <text x="58" y="428" fill="#a8b1c4" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="400" text-anchor="start">reference · sha256</text>
 <path d="M292 204 L305 204 M299 199 L305 204 L299 209" fill="none" stroke="#8496f5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M292 374 L305 374 M299 369 L305 374 L299 379" fill="none" stroke="#8496f5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
 <rect x="312" y="120" width="364" height="332" rx="20" fill="#171e2d" stroke="#2b3448" stroke-width="1.5"/>
 <text x="330" y="146" fill="#8496f5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" text-anchor="start">MATCH GATE</text>
-<text x="658" y="146" fill="#737b8d" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="400" text-anchor="end">bankrec.match · R1</text>
+<text x="658" y="146" fill="#737b8d" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="400" text-anchor="end">bankrec_match · R1</text>
 <g filter="url(#soft)">
 <rect x="328" y="158" width="332" height="96" rx="16" fill="#1b2231" stroke="#2e374b" stroke-width="1.5"/>
 </g>
@@ -104,7 +104,7 @@
 <rect x="700" y="120" width="360" height="332" rx="18" fill="#1b2231" stroke="#2e374b" stroke-width="1.5"/>
 </g>
 <text x="720" y="146" fill="#8496f5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16.5" font-weight="700" text-anchor="start">3-SHEET WORKPAPER</text>
-<text x="1040" y="146" fill="#737b8d" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="400" text-anchor="end">bankrec.export · R1</text>
+<text x="1040" y="146" fill="#737b8d" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="400" text-anchor="end">bankrec_export · R1</text>
 <text x="720" y="172" fill="#f0f3f9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="400" text-anchor="start">ACC-SYN-001-2026-03.xlsx</text>
 <line x1="720" y1="186" x2="1040" y2="186" stroke="#1e2636" stroke-width="1.3"/>
 <text x="720" y="214" fill="#f0f3f9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" text-anchor="start">Bank</text>

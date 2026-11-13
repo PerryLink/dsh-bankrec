@@ -58,6 +58,6 @@ test('the export tool refuses a traversal account id', async () => {
   try {
     const tools = createTools({ transactions: new T(), matches: new T(), baseDir: path.join(dir, 'store') })
     const by = Object.fromEntries(tools.map((tool) => [tool.name, tool]))
-    await assert.rejects(() => by['bankrec.export'].execute({ account_id: '../evil', period: '2026-01' }, { callId: 'path' }), /E_BR_PATH_INVALID/)
+    await assert.rejects(() => by['bankrec_export'].execute({ account_id: '../evil', period: '2026-01' }, { callId: 'path' }), /E_BR_PATH_INVALID/)
   } finally { await rm(dir, { recursive: true, force: true }) }
 })

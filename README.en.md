@@ -37,7 +37,7 @@ dsh plugin --profile <profile> add dsh-bankrec
 
 ## What it is
 
-`dsh-bankrec` ingests bank statements (CSV, CAMT.053/054/056, MT940) and GL CSV into a local storage domain, matches rows 1:1 by exact amount and date within ±3 days, verifies CAMT opening + entries = closing, and exports a 3-sheet xlsx workpaper (`Bank` / `GL` / `Matches`). Everything runs on your machine: no network, no model calls, no uploads — and original files are never modified. All nine tools are namespaced `bankrec.*`; file-writing operations are labeled R1 (local write), read-only ones R0.
+`dsh-bankrec` ingests bank statements (CSV, CAMT.053/054/056, MT940) and GL CSV into a local storage domain, matches rows 1:1 by exact amount and date within ±3 days, verifies CAMT opening + entries = closing, and exports a 3-sheet xlsx workpaper (`Bank` / `GL` / `Matches`). Everything runs on your machine: no network, no model calls, no uploads — and original files are never modified. All nine tools are namespaced `bankrec_*`; file-writing operations are labeled R1 (local write), read-only ones R0.
 
 - **Good fit**: tens to hundreds of bank-statement and GL CSV rows, or CAMT.053 / CAMT.054 / CAMT.056 and MT940 statements — when you need a 3-sheet workpaper a colleague can review.
 - **Not a fit**: automatic posting adjustments or write-backs to a bank or ERP; this package only checks locally and never makes the approval decision for you.
@@ -83,10 +83,10 @@ Every PerryLink plugin is listed in the built-in DSH Desktop market: **Market �
 ## Core capabilities
 
 - **Multi-format ingest** — bank/GL CSV, CAMT.053, CAMT.054, MT940; IBAN validated per ISO 13616. Ingest returns sha256 evidence hashes; amounts are kept as integer cents.
-- **1:1 matching** — `bankrec.match` consumes pairs by exact amount and date within ±3 days, stores the matches, and returns both unmatched sides.
-- **CAMT balance check** — `bankrec.reconcile_camt` verifies opening + entries = closing; `account_id` is required when the statement is ambiguous.
-- **3-sheet workpaper** — `bankrec.export` writes an xlsx with `Bank` / `GL` / `Matches` sheets under `exports/`.
-- **Read-only cancellations** — `bankrec.camt056_list` lists CAMT.056 cancellation requests; nothing is ever cancelled.
+- **1:1 matching** — `bankrec_match` consumes pairs by exact amount and date within ±3 days, stores the matches, and returns both unmatched sides.
+- **CAMT balance check** — `bankrec_reconcile_camt` verifies opening + entries = closing; `account_id` is required when the statement is ambiguous.
+- **3-sheet workpaper** — `bankrec_export` writes an xlsx with `Bank` / `GL` / `Matches` sheets under `exports/`.
+- **Read-only cancellations** — `bankrec_camt056_list` lists CAMT.056 cancellation requests; nothing is ever cancelled.
 - **Fully local** — no HTTP / DNS / WebSocket calls in the source; it connects to no bank, ERP, or cloud service.
 
 ### Tool surface
@@ -95,15 +95,15 @@ Tool names are the stable API (kept in English to match the runtime output).
 
 | Tool | Purpose | Risk |
 |---|---|---|
-| `bankrec.ingest` | Ingest bank/GL CSV rows (`date,amount[,reference]`, per account+period); integer cents, evidence hashes | R1 local write |
-| `bankrec.ingest_camt` | Ingest CAMT.053 XML statement entries (DBIT/CRDT supported) | R1 local write |
-| `bankrec.ingest_camt054` | Ingest CAMT.054 debit/credit notifications (BkToCstmrDbtCdtNtfctn) as bank rows | R1 local write |
-| `bankrec.ingest_mt940` | Ingest MT940 statement entries | R1 local write |
-| `bankrec.match` | 1:1 match bank rows to GL rows by exact amount and date within ±3 days; stores matches, returns unmatched | R1 local write |
-| `bankrec.reconcile_camt` | Check CAMT opening + entries = closing; requires `account_id` when ambiguous | R0 |
-| `bankrec.export` | Export a 3-sheet xlsx: Bank / GL / Matches | R1 local write |
-| `bankrec.iban_check` | Validate an IBAN per ISO 13616 (charset, length, country BBAN length, mod-97) | R0 |
-| `bankrec.camt056_list` | List CAMT.056 cancellation requests (original tx id, end-to-end id, reason code, account); read-only, nothing is cancelled | R0 |
+| `bankrec_ingest` | Ingest bank/GL CSV rows (`date,amount[,reference]`, per account+period); integer cents, evidence hashes | R1 local write |
+| `bankrec_ingest_camt` | Ingest CAMT.053 XML statement entries (DBIT/CRDT supported) | R1 local write |
+| `bankrec_ingest_camt054` | Ingest CAMT.054 debit/credit notifications (BkToCstmrDbtCdtNtfctn) as bank rows | R1 local write |
+| `bankrec_ingest_mt940` | Ingest MT940 statement entries | R1 local write |
+| `bankrec_match` | 1:1 match bank rows to GL rows by exact amount and date within ±3 days; stores matches, returns unmatched | R1 local write |
+| `bankrec_reconcile_camt` | Check CAMT opening + entries = closing; requires `account_id` when ambiguous | R0 |
+| `bankrec_export` | Export a 3-sheet xlsx: Bank / GL / Matches | R1 local write |
+| `bankrec_iban_check` | Validate an IBAN per ISO 13616 (charset, length, country BBAN length, mod-97) | R0 |
+| `bankrec_camt056_list` | List CAMT.056 cancellation requests (original tx id, end-to-end id, reason code, account); read-only, nothing is cancelled | R0 |
 
 ### Input & output
 

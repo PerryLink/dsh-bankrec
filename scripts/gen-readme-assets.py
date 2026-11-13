@@ -472,7 +472,7 @@ def flow_svg(skin_name):
     chip(58, 166, 46, 22, "CSV", "accent", "pill", 14)
     chip(112, 166, 116, 22, "CAMT.053/054", "accent", "pill", 14)
     chip(58, 192, 62, 22, "MT940", "accent", "pill", 14)
-    t(58, 236, "bankrec.ingest", 17, "text", MONO, 700)
+    t(58, 236, "bankrec_ingest", 17, "text", MONO, 700)
     t(58, 254, "ingest_camt · ingest_mt940", 14, "sub", MONO)
     t(58, 272, "ingest_camt054 · sha256", 14, "sub", MONO)
 
@@ -484,7 +484,7 @@ def flow_svg(skin_name):
     line(58, 332, 274, 332, "grid", 1.3)
     chip(58, 342, 46, 22, "CSV", "accent", "pill", 14)
     t(112, 358, "date,amount[,reference]", 13.5, "sub", MONO)
-    t(58, 388, "bankrec.ingest", 17, "text", MONO, 700)
+    t(58, 388, "bankrec_ingest", 17, "text", MONO, 700)
     t(58, 410, "date · amount_cents", 14, "sub", MONO)
     t(58, 428, "reference · sha256", 14, "sub", MONO)
 
@@ -496,7 +496,7 @@ def flow_svg(skin_name):
     p.append(f'<rect x="312" y="120" width="364" height="332" rx="20" '
              f'fill="{s["zone"]}" stroke="{s["zone_edge"]}" stroke-width="1.5"/>')
     t(330, 146, "MATCH GATE", 18, "accent", MONO, 700)
-    t(658, 146, "bankrec.match · R1", 14, "faint", MONO, anchor="end")
+    t(658, 146, "bankrec_match · R1", 14, "faint", MONO, anchor="end")
 
     # rule spec card
     p.append(f'<g filter="url(#soft)">')
@@ -535,7 +535,7 @@ def flow_svg(skin_name):
     box(700, 120, 360, 332)
     p.append('</g>')
     t(720, 146, "3-SHEET WORKPAPER", 16.5, "accent", MONO, 700)
-    t(1040, 146, "bankrec.export · R1", 14, "faint", MONO, anchor="end")
+    t(1040, 146, "bankrec_export · R1", 14, "faint", MONO, anchor="end")
     t(720, 172, "ACC-SYN-001-2026-03.xlsx", 15, "text", MONO)
     line(720, 186, 1040, 186, "grid", 1.3)
 

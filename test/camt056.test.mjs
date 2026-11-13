@@ -27,7 +27,7 @@ const xml = `<?xml version="1.0"?>
 </Document>`
 
 test('cancellation requests expose original ids and reasons', async () => {
-  const r = await tools['bankrec.camt056_list'].execute({ camt_xml: xml }, { callId: 'c' })
+  const r = await tools['bankrec_camt056_list'].execute({ camt_xml: xml }, { callId: 'c' })
   assert.equal(r.requests, 2)
   assert.equal(r.items[0].original_tx_id, 'TXN-100')
   assert.equal(r.items[0].original_end_to_end_id, 'E2E-100')

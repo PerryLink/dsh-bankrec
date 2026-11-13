@@ -14,7 +14,7 @@ class T {
 test('public MIT CAMT: opening + entries = closing', async () => {
   const xml = readFileSync('fixtures/public/mit-camt/test-camt053.xml', 'utf8')
   const tools = createTools({ transactions: new T(), matches: new T(), baseDir: '/tmp/bank-public' })
-  const reconcile = tools.find((tool) => tool.name === 'bankrec.reconcile_camt')
+  const reconcile = tools.find((tool) => tool.name === 'bankrec_reconcile_camt')
   const result = await reconcile.execute({ camt_xml: xml }, { callId: 'camt-reconcile' })
   assert.equal(result.opening_cents, 100000)
   assert.equal(result.closing_cents, 95000)
@@ -25,7 +25,7 @@ test('public MIT CAMT: opening + entries = closing', async () => {
 test('public MIT CAMT: multi-account reconcile requires account_id', async () => {
   const xml = readFileSync('fixtures/public/mit-camt/example-camt053-a.xml', 'utf8')
   const tools = createTools({ transactions: new T(), matches: new T(), baseDir: '/tmp/bank-public' })
-  const reconcile = tools.find((tool) => tool.name === 'bankrec.reconcile_camt')
+  const reconcile = tools.find((tool) => tool.name === 'bankrec_reconcile_camt')
   await assert.rejects(() => reconcile.execute({ camt_xml: xml }, { callId: 'multi-none' }), /account_id required/)
   const result = await reconcile.execute({ camt_xml: xml, account_id: 'NL14SNSB0012345678' }, { callId: 'multi-one' })
   assert.equal(result.opening_cents, 20369)

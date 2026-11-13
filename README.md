@@ -37,7 +37,7 @@ dsh plugin --profile <profile> add dsh-bankrec
 
 ## 它是什么
 
-把银行流水（CSV、CAMT.053/054/056、MT940）和总账 CSV 入库到本地存储域，按「金额完全相同 + 日期相差 ≤3 天」逐笔 1:1 勾对，核对 CAMT 期初 + 明细 = 期末，最后导出 Bank / GL / Matches 三张表的 xlsx 底稿。全部计算在本机完成：不联网、不调用模型、不上传，原始文件不会被修改。九个工具全部带 `bankrec.` 命名空间；写文件的操作标 R1（本地写），只读操作标 R0。
+把银行流水（CSV、CAMT.053/054/056、MT940）和总账 CSV 入库到本地存储域，按「金额完全相同 + 日期相差 ≤3 天」逐笔 1:1 勾对，核对 CAMT 期初 + 明细 = 期末，最后导出 Bank / GL / Matches 三张表的 xlsx 底稿。全部计算在本机完成：不联网、不调用模型、不上传，原始文件不会被修改。九个工具全部带 `bankrec_*` 命名空间；写文件的操作标 R1（本地写），只读操作标 R0。
 
 - **适合**：几十到几百笔的银行流水与总账 CSV，或 CAMT.053 / CAMT.054 / CAMT.056、MT940 对账单；需要一份能交给同事复核的三表底稿。
 - **不适合**：需要自动调账、回写银行或 ERP 的场景；本包只做本地核对，不替你做审批结论。
@@ -83,10 +83,10 @@ dsh plugin --profile <profile> add dsh-bankrec
 ## 核心能力
 
 - **多格式入库** —— 银行/总账 CSV、CAMT.053、CAMT.054、MT940；IBAN 按 ISO 13616 校验。入库返回 sha256 证据哈希，金额按整数分记账。
-- **1:1 匹配** —— `bankrec.match` 按「金额完全相同 + 日期相差 ≤3 天」逐笔消费，写入匹配并返回两侧未达行。
-- **CAMT 余额核对** —— `bankrec.reconcile_camt` 验证期初 + 明细 = 期末；多账户时必须给 `account_id`。
-- **三表底稿** —— `bankrec.export` 把 `Bank` / `GL` / `Matches` 三张表导出为 xlsx，落在 `exports/`。
-- **只读取消请求** —— `bankrec.camt056_list` 列出 CAMT.056 取消请求，绝不执行取消。
+- **1:1 匹配** —— `bankrec_match` 按「金额完全相同 + 日期相差 ≤3 天」逐笔消费，写入匹配并返回两侧未达行。
+- **CAMT 余额核对** —— `bankrec_reconcile_camt` 验证期初 + 明细 = 期末；多账户时必须给 `account_id`。
+- **三表底稿** —— `bankrec_export` 把 `Bank` / `GL` / `Matches` 三张表导出为 xlsx，落在 `exports/`。
+- **只读取消请求** —— `bankrec_camt056_list` 列出 CAMT.056 取消请求，绝不执行取消。
 - **纯本地** —— 源码无 HTTP / DNS / WebSocket 调用；不连银行、ERP 或云服务。
 
 ### 工具面
@@ -95,15 +95,15 @@ dsh plugin --profile <profile> add dsh-bankrec
 
 | 工具 | 用途 | 风险 |
 |---|---|---|
-| `bankrec.ingest` | 导入银行/总账 CSV 行（`date,amount[,reference]`，按账户+期间）；整数分，附证据哈希 | R1 local write |
-| `bankrec.ingest_camt` | 导入 CAMT.053 XML 对账单条目（支持 DBIT/CRDT） | R1 local write |
-| `bankrec.ingest_camt054` | 导入 CAMT.054 借贷通知（BkToCstmrDbtCdtNtfctn）为银行行 | R1 local write |
-| `bankrec.ingest_mt940` | 导入 MT940 对账单条目 | R1 local write |
-| `bankrec.match` | 银行行与 GL 行按金额完全相同 + 日期相差 ≤3 天做 1:1 匹配；写入匹配并返回未达行 | R1 local write |
-| `bankrec.reconcile_camt` | 核对 CAMT 期初 + 明细 = 期末；有歧义时要求 `account_id` | R0 |
-| `bankrec.export` | 导出三表 xlsx：Bank / GL / Matches | R1 local write |
-| `bankrec.iban_check` | 校验 IBAN（ISO 13616：字符集、长度、国家 BBAN 长度、mod-97） | R0 |
-| `bankrec.camt056_list` | 列出 CAMT.056 取消请求（原交易号、端到端号、原因码、账户）；只读，不执行取消 | R0 |
+| `bankrec_ingest` | 导入银行/总账 CSV 行（`date,amount[,reference]`，按账户+期间）；整数分，附证据哈希 | R1 local write |
+| `bankrec_ingest_camt` | 导入 CAMT.053 XML 对账单条目（支持 DBIT/CRDT） | R1 local write |
+| `bankrec_ingest_camt054` | 导入 CAMT.054 借贷通知（BkToCstmrDbtCdtNtfctn）为银行行 | R1 local write |
+| `bankrec_ingest_mt940` | 导入 MT940 对账单条目 | R1 local write |
+| `bankrec_match` | 银行行与 GL 行按金额完全相同 + 日期相差 ≤3 天做 1:1 匹配；写入匹配并返回未达行 | R1 local write |
+| `bankrec_reconcile_camt` | 核对 CAMT 期初 + 明细 = 期末；有歧义时要求 `account_id` | R0 |
+| `bankrec_export` | 导出三表 xlsx：Bank / GL / Matches | R1 local write |
+| `bankrec_iban_check` | 校验 IBAN（ISO 13616：字符集、长度、国家 BBAN 长度、mod-97） | R0 |
+| `bankrec_camt056_list` | 列出 CAMT.056 取消请求（原交易号、端到端号、原因码、账户）；只读，不执行取消 | R0 |
 
 ### 输入与输出
 

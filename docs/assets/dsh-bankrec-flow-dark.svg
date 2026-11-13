@@ -2,7 +2,7 @@
 <title>dsh-bankrec data flow</title>
 <rect width="1200" height="360" rx="18" fill="#0d1117"/>
 <text x="60" y="62" fill="#f0f6fc" font-family="ui-sans-serif,system-ui,sans-serif" font-size="30" font-weight="700">dsh-bankrec</text>
-<text x="60" y="94" fill="#8b949e" font-family="ui-monospace,monospace" font-size="16">bankrec.ingest → match / reconcile_camt → export · Bank / GL / Matches</text>
+<text x="60" y="94" fill="#8b949e" font-family="ui-monospace,monospace" font-size="16">bankrec_ingest → match / reconcile_camt → export · Bank / GL / Matches</text>
 <line x1="60" y1="116" x2="1140" y2="116" stroke="#30363d"/>
 <rect x="60" y="150" width="180" height="96" rx="14" fill="#161b22" stroke="#30363d" stroke-width="2"/>
 <text x="150" y="190" fill="#f0f6fc" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">bank CSV · GL CSV</text>
@@ -10,7 +10,7 @@
 <path d="M246 198h33" stroke="#8b949e" stroke-width="3"/>
 <path d="M277 191l10 7-10 7" fill="none" stroke="#8b949e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <rect x="285" y="150" width="180" height="96" rx="14" fill="#161b22" stroke="#4B67B4" stroke-width="2"/>
-<text x="375" y="190" fill="#f0f6fc" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">bankrec.ingest</text>
+<text x="375" y="190" fill="#f0f6fc" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">bankrec_ingest</text>
 <text x="375" y="218" fill="#8b949e" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12">ingest_camt · ingest_mt940</text>
 <path d="M471 198h33" stroke="#8b949e" stroke-width="3"/>
 <path d="M502 191l10 7-10 7" fill="none" stroke="#8b949e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -20,12 +20,12 @@
 <path d="M696 198h33" stroke="#8b949e" stroke-width="3"/>
 <path d="M727 191l10 7-10 7" fill="none" stroke="#8b949e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <rect x="735" y="150" width="180" height="96" rx="14" fill="#161b22" stroke="#4B67B4" stroke-width="2"/>
-<text x="825" y="190" fill="#f0f6fc" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">bankrec.match</text>
+<text x="825" y="190" fill="#f0f6fc" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">bankrec_match</text>
 <text x="825" y="218" fill="#8b949e" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12">reconcile_camt · iban_check</text>
 <path d="M921 198h33" stroke="#8b949e" stroke-width="3"/>
 <path d="M952 191l10 7-10 7" fill="none" stroke="#8b949e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <rect x="960" y="150" width="180" height="96" rx="14" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
-<text x="1050" y="190" fill="#f0f6fc" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">bankrec.export</text>
+<text x="1050" y="190" fill="#f0f6fc" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">bankrec_export</text>
 <text x="1050" y="218" fill="#8b949e" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12">Bank · GL · Matches</text>
 <text x="60" y="300" fill="#8b949e" font-family="ui-monospace,monospace" font-size="13">R0 read-only · R1 local write · sha256 evidence · no network · no model call</text>
 <text x="60" y="328" fill="#8b949e" font-family="ui-monospace,monospace" font-size="13">match rule: exact amount · date ±3 days · 1:1 · originals untouched</text>

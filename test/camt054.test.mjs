@@ -44,8 +44,8 @@ test('a camt.053 document is rejected by the 054 parser', () => {
 
 test('the tool stores rows once and reports the count', async () => {
   const tools = Object.fromEntries(createTools({ transactions: new T(), matches: new T(), baseDir: '/tmp/br-camt054' }).map((t) => [t.name, t]))
-  const first = await tools['bankrec.ingest_camt054'].execute({ camt_xml: xml }, { callId: 'c' })
+  const first = await tools['bankrec_ingest_camt054'].execute({ camt_xml: xml }, { callId: 'c' })
   assert.equal(first.rows, 2)
-  const second = await tools['bankrec.ingest_camt054'].execute({ camt_xml: xml }, { callId: 'c' })
+  const second = await tools['bankrec_ingest_camt054'].execute({ camt_xml: xml }, { callId: 'c' })
   assert.equal(second.rows, 0)
 })
