@@ -51,14 +51,14 @@ async function run() {
     }).map((tool) => [tool.name, tool]))
     const call = (name, args) => tools[name].execute(args, { callId: 'quickstart' })
 
-    const ingest = await call('bankrec.ingest', {
+    const ingest = await call('bankrec_ingest', {
       account_id: account,
       period,
       bank_csv: bankCsv,
       gl_csv: glCsv,
     })
-    const match = await call('bankrec.match', { account_id: account, period })
-    const exported = await call('bankrec.export', { account_id: account, period })
+    const match = await call('bankrec_match', { account_id: account, period })
+    const exported = await call('bankrec_export', { account_id: account, period })
     const workbook = readWorkbook(await readFile(exported.path))
 
     const bankRows = parseCsv(bankCsv, 'bank', account, period, sha256Hex(bankCsv))
@@ -67,12 +67,12 @@ async function run() {
     const unmatchedBank = match.unmatched_bank.map((id) => refOf.get(id) ?? id).sort()
     const unmatchedGl = match.unmatched_gl.map((id) => refOf.get(id) ?? id).sort()
 
-    const camt = await call('bankrec.ingest_camt', { camt_xml: camt053, account_id: account })
-    const balance = await call('bankrec.reconcile_camt', { camt_xml: camt053 })
-    const notifications = await call('bankrec.ingest_camt054', { camt_xml: camt054, account_id: account })
-    const cancellations = await call('bankrec.camt056_list', { camt_xml: camt056 })
-    const mt = await call('bankrec.ingest_mt940', { mt940_text: mt940, account_id: account })
-    const ibanResult = await call('bankrec.iban_check', { iban })
+    const camt = await call('bankrec_ingest_camt', { camt_xml: camt053, account_id: account })
+    const balance = await call('bankrec_reconcile_camt', { camt_xml: camt053 })
+    const notifications = await call('bankrec_ingest_camt054', { camt_xml: camt054, account_id: account })
+    const cancellations = await call('bankrec_camt056_list', { camt_xml: camt056 })
+    const mt = await call('bankrec_ingest_mt940', { mt940_text: mt940, account_id: account })
+    const ibanResult = await call('bankrec_iban_check', { iban })
 
     const summary = {
       package: 'dsh-bankrec',

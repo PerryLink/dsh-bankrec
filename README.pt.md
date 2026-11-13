@@ -37,7 +37,7 @@ dsh plugin --profile <profile> add dsh-bankrec
 
 ## O que é
 
-O `dsh-bankrec` ingere extratos bancários (CSV, CAMT.053/054/056, MT940) e CSV do GL num domínio de armazenamento local, concilia linhas 1:1 por valor exato e data dentro de ±3 dias, verifica abertura + lançamentos = fechamento do CAMT e exporta uma planilha de trabalho xlsx de 3 abas (`Bank` / `GL` / `Matches`). Tudo roda na sua máquina: sem rede, sem chamadas a modelos, sem uploads — e os arquivos originais nunca são modificados. As nove ferramentas usam o namespace `bankrec.*`; operações que gravam arquivos são marcadas R1 (escrita local), as somente leitura R0.
+O `dsh-bankrec` ingere extratos bancários (CSV, CAMT.053/054/056, MT940) e CSV do GL num domínio de armazenamento local, concilia linhas 1:1 por valor exato e data dentro de ±3 dias, verifica abertura + lançamentos = fechamento do CAMT e exporta uma planilha de trabalho xlsx de 3 abas (`Bank` / `GL` / `Matches`). Tudo roda na sua máquina: sem rede, sem chamadas a modelos, sem uploads — e os arquivos originais nunca são modificados. As nove ferramentas usam o namespace `bankrec_*`; operações que gravam arquivos são marcadas R1 (escrita local), as somente leitura R0.
 
 - **Indicado para**: dezenas a centenas de linhas de extratos bancários e CSV do GL, ou extratos CAMT.053 / CAMT.054 / CAMT.056 e MT940; quando você precisa de uma planilha de trabalho de 3 abas que um colega possa revisar.
 - **Não indicado para**: ajustes automáticos de lançamentos ou reescrita para um banco ou ERP; este pacote só confere localmente e não toma a decisão de aprovação por você.
@@ -83,10 +83,10 @@ Todos os plugins PerryLink estão no mercado embutido do DSH Desktop: **Mercado 
 ## Capacidades principais
 
 - **Ingestão multiformato** — CSV do banco/GL, CAMT.053, CAMT.054, MT940; IBAN validado conforme ISO 13616. A ingestão devolve hashes sha256 de evidência; os valores ficam em centavos inteiros.
-- **Conciliação 1:1** — `bankrec.match` consome pares por valor exato e data dentro de ±3 dias, grava as conciliações e devolve as linhas não conciliadas dos dois lados.
-- **Verificação de saldo CAMT** — `bankrec.reconcile_camt` confere abertura + lançamentos = fechamento; exige `account_id` quando o extrato é ambíguo.
-- **Planilha de trabalho de 3 abas** — `bankrec.export` grava um xlsx com as abas `Bank` / `GL` / `Matches` em `exports/`.
-- **Cancelamentos somente leitura** — `bankrec.camt056_list` lista pedidos de cancelamento CAMT.056; nada é cancelado.
+- **Conciliação 1:1** — `bankrec_match` consome pares por valor exato e data dentro de ±3 dias, grava as conciliações e devolve as linhas não conciliadas dos dois lados.
+- **Verificação de saldo CAMT** — `bankrec_reconcile_camt` confere abertura + lançamentos = fechamento; exige `account_id` quando o extrato é ambíguo.
+- **Planilha de trabalho de 3 abas** — `bankrec_export` grava um xlsx com as abas `Bank` / `GL` / `Matches` em `exports/`.
+- **Cancelamentos somente leitura** — `bankrec_camt056_list` lista pedidos de cancelamento CAMT.056; nada é cancelado.
 - **Totalmente local** — sem chamadas HTTP / DNS / WebSocket no código; não se conecta a nenhum banco, ERP ou serviço de nuvem.
 
 ### Superfície de ferramentas
@@ -95,15 +95,15 @@ Os nomes das ferramentas são a API estável (mantidos em inglês para correspon
 
 | Ferramenta | Finalidade | Risco |
 |---|---|---|
-| `bankrec.ingest` | Ingere linhas CSV do banco/GL (`date,amount[,reference]`, por conta+período); centavos inteiros, hashes de evidência | R1 local write |
-| `bankrec.ingest_camt` | Ingere lançamentos de extrato CAMT.053 XML (aceita DBIT/CRDT) | R1 local write |
-| `bankrec.ingest_camt054` | Ingere notificações de débito/crédito CAMT.054 (BkToCstmrDbtCdtNtfctn) como linhas bancárias | R1 local write |
-| `bankrec.ingest_mt940` | Ingere lançamentos de extratos MT940 | R1 local write |
-| `bankrec.match` | Conciliação 1:1 de linhas do banco com linhas do GL por valor exato e data dentro de ±3 dias; grava conciliações e devolve as não conciliadas | R1 local write |
-| `bankrec.reconcile_camt` | Confere abertura + lançamentos = fechamento do CAMT; exige `account_id` quando ambíguo | R0 |
-| `bankrec.export` | Exporta um xlsx de 3 abas: Bank / GL / Matches | R1 local write |
-| `bankrec.iban_check` | Valida um IBAN conforme ISO 13616 (conjunto de caracteres, comprimento, comprimento BBAN por país, mod-97) | R0 |
-| `bankrec.camt056_list` | Lista pedidos de cancelamento CAMT.056 (id da transação original, id ponta a ponta, código de motivo, conta); somente leitura, nada é cancelado | R0 |
+| `bankrec_ingest` | Ingere linhas CSV do banco/GL (`date,amount[,reference]`, por conta+período); centavos inteiros, hashes de evidência | R1 local write |
+| `bankrec_ingest_camt` | Ingere lançamentos de extrato CAMT.053 XML (aceita DBIT/CRDT) | R1 local write |
+| `bankrec_ingest_camt054` | Ingere notificações de débito/crédito CAMT.054 (BkToCstmrDbtCdtNtfctn) como linhas bancárias | R1 local write |
+| `bankrec_ingest_mt940` | Ingere lançamentos de extratos MT940 | R1 local write |
+| `bankrec_match` | Conciliação 1:1 de linhas do banco com linhas do GL por valor exato e data dentro de ±3 dias; grava conciliações e devolve as não conciliadas | R1 local write |
+| `bankrec_reconcile_camt` | Confere abertura + lançamentos = fechamento do CAMT; exige `account_id` quando ambíguo | R0 |
+| `bankrec_export` | Exporta um xlsx de 3 abas: Bank / GL / Matches | R1 local write |
+| `bankrec_iban_check` | Valida um IBAN conforme ISO 13616 (conjunto de caracteres, comprimento, comprimento BBAN por país, mod-97) | R0 |
+| `bankrec_camt056_list` | Lista pedidos de cancelamento CAMT.056 (id da transação original, id ponta a ponta, código de motivo, conta); somente leitura, nada é cancelado | R0 |
 
 ### Entrada e saída
 

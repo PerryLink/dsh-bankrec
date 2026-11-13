@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.0] — 2026-11-13
+
+### Breaking
+
+- **Tool names no longer contain a dot.** The nine tools are now `bankrec_ingest`, `bankrec_match`, `bankrec_ingest_camt`, `bankrec_export`, `bankrec_ingest_mt940`, `bankrec_reconcile_camt`, `bankrec_iban_check`, `bankrec_ingest_camt054` and `bankrec_camt056_list`. Providers validate `tools[].name` against `^[a-zA-Z0-9_-]+$`; the old dotted names invalidated the whole `tools` array, so the plugin registered but every request carrying its tools was rejected with `Invalid 'tools[N].name'`. Minor bump because tool names are part of the 0.1.0 compatibility promise — update prompts, saved calls and permission rules that still use the old dotted names.
+- `test/tool-name-wire.test.mjs` pins the wire pattern so a new tool cannot reintroduce a dot or drop the `bankrec_` namespace.
+- Earlier changelog entries use the new spelling, so a repository-wide search no longer finds dotted tool names.
+
 ## [0.1.2] — 2026-11-13
 
 ### Fixed
@@ -30,19 +38,19 @@
 
 ### Added
 
-- `bankrec.camt056_list`: read CAMT.056 payment cancellation requests (original transaction id, end-to-end id, reason code, account). Read-only; nothing is cancelled. Verified by `node --test test/*.test.mjs` (17/17).
+- `bankrec_camt056_list`: read CAMT.056 payment cancellation requests (original transaction id, end-to-end id, reason code, account). Read-only; nothing is cancelled. Verified by `node --test test/*.test.mjs` (17/17).
 
 ## [Unreleased]
 
 ### Added
 
-- `bankrec.ingest_camt054`: parse CAMT.054 debit/credit notifications (`BkToCstmrDbtCdtNtfctn`) into the same bank rows as camt.053, with signed amounts and duplicate-safe storage. Verified by `node --test test/*.test.mjs` (15/15).
+- `bankrec_ingest_camt054`: parse CAMT.054 debit/credit notifications (`BkToCstmrDbtCdtNtfctn`) into the same bank rows as camt.053, with signed amounts and duplicate-safe storage. Verified by `node --test test/*.test.mjs` (15/15).
 
 ## [Unreleased]
 
 ### Added
 
-- `bankrec.iban_check`: IBAN validation per ISO 13616 (charset, country BBAN length, ISO 7064 mod 97-10). Verified by `node --test test/iban.test.mjs` (5/5) and the full suite (12/12); no third-party code or fixtures.
+- `bankrec_iban_check`: IBAN validation per ISO 13616 (charset, country BBAN length, ISO 7064 mod 97-10). Verified by `node --test test/iban.test.mjs` (5/5) and the full suite (12/12); no third-party code or fixtures.
 
 ## [0.1.0-alpha.10] — 2026-11-01
 

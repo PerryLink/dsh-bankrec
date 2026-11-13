@@ -32,7 +32,7 @@ test('unknown country still gets the generic check', () => {
 })
 
 test('tool exposes the same result', async () => {
-  const r = await tools['bankrec.iban_check'].execute({ iban: 'GB82WEST12345698765432' }, { callId: 'iban' })
+  const r = await tools['bankrec_iban_check'].execute({ iban: 'GB82WEST12345698765432' }, { callId: 'iban' })
   assert.equal(r.valid, true)
   assert.equal(r.country, 'GB')
 })
@@ -42,7 +42,7 @@ test('tool exposes the same result', async () => {
 // even though `execute()` returns the right thing. ibanCheck() returns `bban_length`,
 // which the schema used to omit. This test fails if a returned key is ever undeclared.
 test('every key returned by execute() is declared in the tool output schema', async () => {
-  const tool = tools['bankrec.iban_check']
+  const tool = tools['bankrec_iban_check']
   const declared = new Set(Object.keys(tool.output.schema.properties))
   for (const iban of ['DE89370400440532013000', 'DE89370400440532013001', 'DE89-3704-0044']) {
     const r = await tool.execute({ iban }, { callId: 'schema' })

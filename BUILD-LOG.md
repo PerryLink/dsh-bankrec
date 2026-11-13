@@ -6,7 +6,7 @@
 
 ### alpha.1 — CAMT.053
 
-- Added `bankrec.ingest_camt`; 2 MIT public CAMT samples (2 + 11 entries); test/gate include public sample.
+- Added `bankrec_ingest_camt`; 2 MIT public CAMT samples (2 + 11 entries); test/gate include public sample.
 
 ### alpha.1 verified
 
@@ -14,7 +14,7 @@
 
 ### alpha.2 — CAMT balance identity
 
-- Added `bankrec.reconcile_camt`; test/acceptance against MIT test-camt053 (balanced).
+- Added `bankrec_reconcile_camt`; test/acceptance against MIT test-camt053 (balanced).
 
 ### alpha.3 — multi-account CAMT
 
@@ -22,4 +22,4 @@
 
 ### alpha.4 — MT940
 
-- Added `bankrec.ingest_mt940`; MIT sample 5 entries; tests 7.
+- Added `bankrec_ingest_mt940`; MIT sample 5 entries; tests 7.

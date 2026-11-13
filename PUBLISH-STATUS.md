@@ -7,17 +7,17 @@
 ## 0.1.0-alpha.1 — CAMT.053 (2026-10-31)
 
 - `latest`/`next` moved to alpha.1 after propagation.
-- Added `bankrec.ingest_camt` with 2 MIT public CAMT.053 samples (2 + 11 entries); 5 gate rows, 3 tests.
+- Added `bankrec_ingest_camt` with 2 MIT public CAMT.053 samples (2 + 11 entries); 5 gate rows, 3 tests.
 - Public sample licenses/source in `fixtures/public/mit-camt/`; not in npm tarball.
 
 ## 0.1.0-alpha.2 — CAMT balance identity (2026-10-31)
 
-- Added `bankrec.reconcile_camt`; MIT test-camt053 balances: opening 100000 + net -5000 = closing 95000.
+- Added `bankrec_reconcile_camt`; MIT test-camt053 balances: opening 100000 + net -5000 = closing 95000.
 - Tests pass; gate 6 rows.
 
 ## 0.1.0-alpha.3 — multi-account CAMT (2026-10-31)
 
-- `bankrec.reconcile_camt` now supports `account_id` and rejects ambiguous multi-account input; MIT multi-account sample test.
+- `bankrec_reconcile_camt` now supports `account_id` and rejects ambiguous multi-account input; MIT multi-account sample test.
 - Tests pass; gate 6 rows.
 
 ### latest moved
@@ -25,7 +25,7 @@
 
 ## 0.1.0-alpha.4 — MT940 (2026-10-31)
 
-- Added `bankrec.ingest_mt940`; MIT sample 5 entries; tests 7; gate 7 rows.
+- Added `bankrec_ingest_mt940`; MIT sample 5 entries; tests 7; gate 7 rows.
 
 ### latest moved
 - `latest`/`next` verified alpha.4 after propagation; CI run queued at last check.
