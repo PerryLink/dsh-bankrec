@@ -138,6 +138,11 @@ node samples/quickstart/run.mjs
 
 *सिंथेटिक नमूना → गोल्डन `samples/quickstart/expected/result.json`; कमांड और हैश `screenshots.json` में।*
 
+![dsh-bankrec quickstart का वास्तविक आउटपुट](docs/assets/dsh-bankrec-demo.gif)
+
+*इस रिपॉज़िटरी में दर्ज असली रन का एनिमेटेड रीप्ले।*
+
+
 fixture-आधारित उदाहरण: इनपुट [`fixtures/public/mit-camt/example-camt053-a.xml`](https://github.com/PerryLink/dsh-bankrec/blob/main/fixtures/public/mit-camt/example-camt053-a.xml) (सार्वजनिक MIT नमूना); कमांड `pnpm test`।
 
 स्वीकृति: `node scripts/acceptance.mjs`, विवरण `ACCEPTANCE.csv` में (सभी 11 पंक्तियाँ पास; SKU पंक्तियाँ `counted=false`, PS1-QS01 bundled-नमूना पुनःस्थापना `counted=true`):

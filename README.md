@@ -138,6 +138,11 @@ node samples/quickstart/run.mjs
 
 *合成样例 → 金标 `samples/quickstart/expected/result.json`；命令与哈希见 `screenshots.json`。*
 
+![dsh-bankrec quickstart 真实运行输出](docs/assets/dsh-bankrec-demo.gif)
+
+*本仓库一次真实运行的动图回放。*
+
+
 fixture 示例：输入 [`fixtures/public/mit-camt/example-camt053-a.xml`](https://github.com/PerryLink/dsh-bankrec/blob/main/fixtures/public/mit-camt/example-camt053-a.xml)（公开 MIT 样本）；命令 `pnpm test`。
 
 验收：`node scripts/acceptance.mjs`，明细见 `ACCEPTANCE.csv`（11 行全部通过；SKU 行 `counted=false`，PS1-QS01 为随包样例本地复现 `counted=true`）：

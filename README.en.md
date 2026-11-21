@@ -138,6 +138,11 @@ node samples/quickstart/run.mjs
 
 *Synthetic sample → golden `samples/quickstart/expected/result.json`; command and hashes in `screenshots.json`.*
 
+![Real dsh-bankrec quickstart output](docs/assets/dsh-bankrec-demo.gif)
+
+*Animated replay of a real run recorded in this repository.*
+
+
 Fixture-backed example: input [`fixtures/public/mit-camt/example-camt053-a.xml`](https://github.com/PerryLink/dsh-bankrec/blob/main/fixtures/public/mit-camt/example-camt053-a.xml) (public MIT sample); command `pnpm test`.
 
 Acceptance: `node scripts/acceptance.mjs`, details in `ACCEPTANCE.csv` (all 11 rows pass; SKU rows are `counted=false`, PS1-QS01 is the bundled-sample replay `counted=true`):

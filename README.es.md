@@ -138,6 +138,11 @@ node samples/quickstart/run.mjs
 
 *Muestra sintética → patrón oro `samples/quickstart/expected/result.json`; comando y hashes en `screenshots.json`.*
 
+![Salida real del quickstart de dsh-bankrec](docs/assets/dsh-bankrec-demo.gif)
+
+*Repetición animada de una ejecución real registrada en este repositorio.*
+
+
 Ejemplo con fixture: entrada [`fixtures/public/mit-camt/example-camt053-a.xml`](https://github.com/PerryLink/dsh-bankrec/blob/main/fixtures/public/mit-camt/example-camt053-a.xml) (muestra MIT pública); comando `pnpm test`.
 
 Aceptación: `node scripts/acceptance.mjs`, detalles en `ACCEPTANCE.csv` (las 11 filas pasan; las filas SKU son `counted=false`, PS1-QS01 es la reproducción de la muestra incluida `counted=true`):
