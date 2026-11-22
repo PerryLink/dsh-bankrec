@@ -11,6 +11,8 @@
 
 DeepSeek Harness के लिए बैंक-रिकंसिलिएशन प्लगइन: CSV, CAMT.053/054/056 और MT940 अंतर्ग्रहण, 1:1 मिलान, CAMT शेष सत्यापन, और `Bank` / `GL` / `Matches` xlsx निर्यात।
 
+अंतिम सत्यापन: DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
+
 [इंस्टॉल](#तीन-चरणों-में-शुरुआत) · [कॉन्फ़िगरेशन](#कॉन्फ़िगरेशन) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -141,7 +143,6 @@ node samples/quickstart/run.mjs
 ![dsh-bankrec quickstart का वास्तविक आउटपुट](docs/assets/dsh-bankrec-demo.gif)
 
 *इस रिपॉज़िटरी में दर्ज असली रन का एनिमेटेड रीप्ले।*
-
 
 fixture-आधारित उदाहरण: इनपुट [`fixtures/public/mit-camt/example-camt053-a.xml`](https://github.com/PerryLink/dsh-bankrec/blob/main/fixtures/public/mit-camt/example-camt053-a.xml) (सार्वजनिक MIT नमूना); कमांड `pnpm test`।
 

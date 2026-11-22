@@ -11,6 +11,8 @@
 
 面向 DeepSeek Harness 的银行对账插件：CSV、CAMT.053/054/056、MT940 入库，1:1 匹配与 CAMT 余额核对，导出 Bank / GL / Matches 三张表的 xlsx 底稿。
 
+最近一次核验：DeepSeek Harness `dsh-v0.2.3-alpha.1`（2026-11-22）。
+
 [安装](#三步上手) · [配置](#配置) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -141,7 +143,6 @@ node samples/quickstart/run.mjs
 ![dsh-bankrec quickstart 真实运行输出](docs/assets/dsh-bankrec-demo.gif)
 
 *本仓库一次真实运行的动图回放。*
-
 
 fixture 示例：输入 [`fixtures/public/mit-camt/example-camt053-a.xml`](https://github.com/PerryLink/dsh-bankrec/blob/main/fixtures/public/mit-camt/example-camt053-a.xml)（公开 MIT 样本）；命令 `pnpm test`。
 
