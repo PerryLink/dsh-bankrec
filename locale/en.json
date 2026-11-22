@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Bank statement reconciliation",
+    "description": "Reconcile bank statements against the GL row by row — unmatched rows plus a 3-sheet workpaper, entirely on your own machine."
+  }
+}
